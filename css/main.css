@@ -1,3 +1,13 @@
+/*colors
+on the map, use the main color and the light color as the range
+main gray: #1f3f48
+light gray: #d2d9da
+main blue: #47b4f2
+light blue: #daf0fc
+main green: #b0c422
+light green: #eff3d3*/
+
+
 body {
   font-family: 'Roboto', 'sans-serif';
 }
