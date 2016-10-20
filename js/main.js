@@ -2,42 +2,6 @@ var buildScatter = function(selectState) {
 
   console.log(selectState);
 
-  // load data
-  var institutionFile = "data/institutional-data.csv";
-  d3.csv(institutionFile,
-      function(d) {
-          return {
-              college: d.college_name,
-              state: d.state,
-              collegeType: d.type_des,
-              medianIncome: +d.median_family_income,
-              meanPrice: +d.avg_net_price,
-              medianEarnings: +d.median_earnings,
-              completionRate: +d.completion_rate,
-              meanDebtWithdrawn: +d.debt_withdrew,
-              meanDebtGraudated: +d.debt_graduated,
-              repaymentRate: +d.repayment_rate
-          };
-      },
-      function(error, data) {
-          if (error != null) {
-              alert("Uh-oh, something went wrong. Try again?");
-          } else {
-              this.institutionData = data;
-              // console.log("Successfully imported "+ data.length() +" records.");
-              var filtered_data = data.filter(function(d,i,arr) {
-                if (selectState == d.state) {
-                  return d.state;
-                } else {
-                  return false;
-                }
-              });
-              console.log(filtered_data);
-          }
-      });
-
-
-
   // margins
   var margin = {top: 20, right: 80, bottom: 290, left: 100},
       width = 865 - margin.left - margin.right,
@@ -57,10 +21,50 @@ var buildScatter = function(selectState) {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.selectAll("text")
-      .data(institutionFile)
-    .enter().append("text")
-      .text(selectState);
+
+  // load data
+  var institutionFile = "data/institutional-data.csv";
+  d3.csv(institutionFile,
+      function(d) {
+          return {
+              college: d.college_name,
+              state: d.state,
+              college_type: d.type_des,
+              campus_type: d.campus_des,
+              median_income: +d.median_family_income,
+              mean_price: +d.avg_net_price,
+              median_earnings: +d.median_earnings,
+              completion_rate: +d.completion_rate,
+              mean_debt_withdrawn: +d.debt_withdrew,
+              mean_debt_graudated: +d.debt_graduated,
+              repayment_rate: +d.repayment_rate
+          };
+      },
+      function(error, data) {
+          if (error != null) {
+              alert("Uh-oh, something went wrong. Try again?");
+          } else {
+                var filtered_data = data.filter(function(d,i,arr) {
+                if (selectState == d.state) {
+                  return d.state;
+                } else {
+                  return false;
+                }
+              });
+              plot_data(filtered_data);
+          }
+      });
+
+  var plot_data = function(data) {
+      console.log(data);
+
+      svg.selectAll("text")
+          .data(data)
+        .enter().append("text")
+          .text(selectState);
+
+  }
+
 
 };
 
