@@ -9,6 +9,7 @@
     <!-- css -->
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/stateface.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
@@ -20,9 +21,39 @@
   </head>
   <body>
 
-    <div class="state" id="NY"><a href="#">New York</a></div>
-    <div class="state" id="NC"><a href="#">North Carolina</a></div>
-    <div id="canvas1"></div>
+    <div class="container">
+
+      <div class="row top-row">
+        <div class="col-xs-12 col-sm-8">
+          <img src="mapdemo.png" class="img-responsive">
+          <span class="state" id="CA"><a href="#">California</a></span>
+          <span class="state" id="NC"><a href="#">North Carolina</a></span>
+          <span class="state" id="NY"><a href="#">New York</a></span>
+          <span class="state" id="NJ"><a href="#">New Jersey</a></span>
+        </div>
+        <div class="col-xs-12 col-sm-4 intro">
+          <h1>This is where our headline goes</h1>
+          <p>This is where some intro text goes. Going to put some information about this project here so people know what it's about. There will also be an about the data button to display the data.</p>
+        </div>
+      </div>
+
+
+      <div class="row bottom-row">
+        <div class="col-xs-12 col-sm-8 scatter">
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <div id="schoolinfo"></div>
+        </div>
+      </div>
+
+      <footer>
+        Project produced by Natalia Lopez, Moazzam Khan, Kiersten Schmidt and Katherine Shaw for INLS690 at the University of North Carolina at Chapel Hill.
+      </footer>
+
+    </div>
+
+
+
 
     <script src="js/scatterplot.js"></script>
   </body>

@@ -10,13 +10,65 @@ light green: #eff3d3*/
 
 body {
   font-family: 'Roboto', 'sans-serif';
+  color: #1f3f48;
 }
 
-#canvas1 {
-  height: 50%;
-  width: 50%;
-  background-color: #eee;
-  display: none;
+.container {
+  padding-top: 2%;
+}
+
+.intro {
+  text-align: center;
+}
+
+.intro h1 {
+  font-size: 4rem;
+  font-weight: 900;
+}
+
+.intro p {
+  font-size: 1.5rem;
+}
+
+.top-row {
+  padding-bottom: 4rem;
+  border-bottom: 3px solid #ECEDEB;
+}
+
+.bottom-border {
+  padding-top: 2rem;
+  border-bottom: 8px solid #ECEDEB;
+  padding-bottom: 2rem;
+}
+
+footer {
+  font-size: 1rem;
+  padding: 1rem 0;
+}
+
+.img-responsive {
+  max-with: 80%;
+}
+
+circle.main {
+  fill: #47b4f2;
+  opacity: .5;
+}
+
+circle.branch {
+  fill: #b0c422;
+  opacity: 1;
+}
+
+#schoolinfo h2 {
+  color: #47b4f2;
+  margin-top: -1rem;
+  font-weight: 900;
+}
+
+.sf {
+  font-size: 20rem;
+  color: #47b4f2;
 }
 
 /*styles to make the svg responsive*/
