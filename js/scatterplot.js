@@ -53,7 +53,24 @@ var buildScatter = function(selectState) {
           if (error != null) {
               alert("Uh-oh, something went wrong. Try again?");
           } else {
-                var filtered_data = data.filter(function(d,i,arr) {
+                // Filter out schools with non-numbers in numerical fields
+                var filtered_data = data.filter(function(d) {
+                  var number_fields =
+                    ["median_income", "mean_price", "median_earnings",
+                    "completion_rate", "mean_debt_graduated",
+                    "mean_debt_withdrawn", "repayment_rate"];
+
+                  for (var i=0; i < number_fields.length; i++) {
+                    var property_value = d[number_fields[i]];
+                    if (isNaN(property_value) || property_value <= 0) {
+                      return false;
+                    }
+                  }
+                  return true;
+                });
+
+                // Filter to show selected state
+                filtered_data = filtered_data.filter(function(d,i,arr) {
                 if (selectState == d.state) {
                   return d.state;
                 } else {
