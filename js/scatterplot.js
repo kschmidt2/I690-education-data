@@ -84,8 +84,8 @@ var buildScatter = function(selectState) {
   var plot_data = function(data) {
       console.log(data);
 
-      x.domain([0, d3.max(data, function(d) { return d.median_earnings; })]).nice();
-      y.domain([0, d3.max(data, function(d) { return d.mean_debt_graduated;  })]).nice();
+      x.domain(d3.extent(data, function(d) { return d.median_earnings; })).nice();
+      y.domain(d3.extent(data, function(d) { return d.mean_debt_graduated;  })).nice();
 
       svg.append("g")
           .attr("class", "axis")
@@ -118,11 +118,11 @@ var buildScatter = function(selectState) {
           svg.selectAll(".dot")
             .data(data)
           .enter().append("circle")
-            .attr("class", function(d) { return "dot " + d.campus_type })
+            // .attr("class", function(d) { return "dot " + d.campus_type })
             .attr("r", 3.5)
             .attr("cx", function(d) { return x(d.median_earnings); })
             .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-            .attr("r", function(d) { if (d.completion_rate === 0) { return 5 } else { return (d.completion_rate)*20}});
+            .attr("r", 5);
 
       // svg.selectAll("text")
       //     .data(data)
@@ -136,8 +136,7 @@ var buildScatter = function(selectState) {
 
 };
 
-$(".state")
-.on('click', function(){
+$(".state").on('click', function(){
   $this = this;
   var stateClass = $(this).attr('id');
   var enterState = '<div class="hidden-xs sf sf-' + stateClass.toLowerCase() + '"></div><h2>' + stateClass + '</h2>';
@@ -145,11 +144,4 @@ $(".state")
   $('#schoolinfo').html(enterState);
   buildScatter(stateClass);
   $('.bottom-row').addClass('bottom-border');
-
-
-// })
-// .one('click', function(){
-//   $this = this;
-//   var stateClass = $(this).attr('id');
-//   buildScatter(stateClass);
 });

@@ -50,15 +50,14 @@ footer {
   max-with: 80%;
 }
 
-circle.main {
+circle {
   fill: #47b4f2;
-  opacity: .5;
 }
 
-circle.branch {
-  fill: #b0c422;
-  opacity: 1;
+.state:hover {
+  cursor: pointer;
 }
+
 
 #schoolinfo h2 {
   color: #47b4f2;
