@@ -3,9 +3,9 @@ var buildScatter = function(selectState) {
   console.log(selectState);
 
   // margins
-  var margin = {top: 30, right: 250, bottom: 130, left: 150},
-      width = 900 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+  var margin = {top: 25, right: 0, bottom: 20, left: 45},
+      width = 500 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
 
   // create responsive svg
@@ -15,7 +15,7 @@ var buildScatter = function(selectState) {
       .append("svg")
       //responsive SVG needs these 2 attributes and no width and height attr
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 800 700")
+      .attr("viewBox", "0 0 550 550")
       //class to make it responsive
       .classed("svg-content-responsive", true)
     .append("g")
@@ -90,30 +90,34 @@ var buildScatter = function(selectState) {
       svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(x))
+          .call(d3.axisBottom(x)
+            .tickFormat(function(d) { return "$" + d.toLocaleString(); }))
         .selectAll("text")
           .attr("y", 5)
-      .attr("x", -37)
+          .attr("x", -42)
           .attr("transform", "rotate(-45)")
-          .style("text-anchor", "start")
-        .append("text")
-          .attr("class", "label")
-          .attr("x", width)
-          .attr("y", -6)
-          .style("text-anchor", "end")
-          .text("Median earnings");
+          .style("text-anchor", "start");
+
+      svg.append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", 450)
+        .style("text-anchor", "end")
+        .text("Median earnings");
 
       svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(0,0)")
-          .call(d3.axisLeft(y))
-        .append("text")
-          .attr("class", "label")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Average debt")
+          .call(d3.axisLeft(y)
+            .tickFormat(function(d) { return "$" + d.toLocaleString(); }));
+
+      svg.append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Average debt")
 
           svg.selectAll(".dot")
             .data(data)

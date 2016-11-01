@@ -65,6 +65,11 @@ circle {
   font-weight: 900;
 }
 
+.label {
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
 .sf {
   font-size: 20rem;
   color: #47b4f2;
@@ -81,7 +86,7 @@ circle {
   display: inline-block;
   position: relative;
   width: 100%;
-  padding-bottom: 68%; /* aspect ratio */
+  padding-bottom: 100%; /* aspect ratio */
   vertical-align: top;
   overflow: hidden;
 }
