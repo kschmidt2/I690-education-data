@@ -45,7 +45,7 @@ var buildScatter = function(selectState) {
               median_earnings: +d.median_earnings,
               completion_rate: +d.completion_rate,
               mean_debt_withdrawn: +d.debt_withdrew,
-              mean_debt_graudated: +d.debt_graduated,
+              mean_debt_graduated: +d.debt_graduated,
               repayment_rate: +d.repayment_rate
           };
       },
@@ -68,7 +68,7 @@ var buildScatter = function(selectState) {
       console.log(data);
 
       x.domain([0, d3.max(data, function(d) { return d.median_earnings; })]).nice();
-      y.domain([0, d3.max(data, function(d) { return d.mean_debt_graudated;  })]).nice();
+      y.domain([0, d3.max(data, function(d) { return d.mean_debt_graduated;  })]).nice();
 
       svg.append("g")
           .attr("class", "axis")
@@ -104,7 +104,7 @@ var buildScatter = function(selectState) {
             .attr("class", function(d) { return "dot " + d.campus_type })
             .attr("r", 3.5)
             .attr("cx", function(d) { return x(d.median_earnings); })
-            .attr("cy", function(d) { return y(d.mean_debt_graudated); })
+            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
             .attr("r", function(d) { if (d.completion_rate === 0) { return 5 } else { return (d.completion_rate)*20}});
 
       // svg.selectAll("text")
