@@ -27,10 +27,6 @@ var buildScatter = function(selectState) {
     var y = d3.scaleLinear()
         .range([height,0]);
 
-
-  // var designation = ["Main", "Branch"];
-  // var designation_color = ["#47b4f2","#b0c422"];
-
   // load data
   var institutionFile = "data/institutional-data.csv";
   d3.csv(institutionFile,
@@ -85,7 +81,7 @@ var buildScatter = function(selectState) {
       console.log(data);
 
       x.domain(d3.extent(data, function(d) { return d.median_earnings; })).nice();
-      y.domain(d3.extent(data, function(d) { return d.mean_debt_graduated;  })).nice();
+      y.domain(d3.extent(data, function(d) { return d.mean_debt_graduated; })).nice();
 
       svg.append("g")
           .attr("class", "axis")
@@ -119,25 +115,28 @@ var buildScatter = function(selectState) {
         .style("text-anchor", "end")
         .text("Average debt")
 
-          svg.selectAll(".dot")
-            .data(data)
-          .enter().append("circle")
-            // .attr("class", function(d) { return "dot " + d.campus_type })
-            .attr("r", 3.5)
-            .attr("cx", function(d) { return x(d.median_earnings); })
-            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-            .attr("r", 5);
+      function scatterHover(d) {
+        var details = "<h3>" + d.college + "</h3><span class='category'>Median earnings:</span> $";
+        details += d.median_earnings.toLocaleString() + "</br><span class='category'>Average debt:</span> $";
+        details += d.mean_debt_graduated.toLocaleString() + "</br><span class='category'>Average net price:</span> $";
+        details += d.mean_price.toLocaleString() + "</br><span class='category'>Graduation rate:</span> ";
+        details += (d.completion_rate*100).toFixed(2) + "%</br><span class='category'>Repayment rate:</span> ";
+        details += (d.repayment_rate*100).toFixed(2) + "%";
+        document.getElementById('schoolinfo').innerHTML = details;
+      }
 
-      // svg.selectAll("text")
-      //     .data(data)
-      //   .enter().append("text")
-      //     .text(function (d) { return d.median_earnings });
+      svg.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        // .attr("class", function(d) { return "dot " + d.campus_type })
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.median_earnings); })
+        .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+        .attr("r", 5)
+        .on("click", scatterHover)
+        .on("mouseover", scatterHover);
 
   }
-
-
-
-
 };
 
 $(".state").on('click', function(){
@@ -145,7 +144,8 @@ $(".state").on('click', function(){
   var stateClass = $(this).attr('id');
   var enterState = '<div class="hidden-xs sf sf-' + stateClass.toLowerCase() + '"></div><h2>' + stateClass + '</h2>';
   $('.scatter').html('<div id="scattercanvas"></div>');
-  $('#schoolinfo').html(enterState);
+  $('#stateinfo').html(enterState);
   buildScatter(stateClass);
   $('.bottom-row').addClass('bottom-border');
+  document.getElementById('schoolinfo').innerHTML = "";
 });
