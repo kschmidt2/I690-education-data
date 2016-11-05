@@ -65,6 +65,12 @@ var buildScatter = function(selectState) {
                   return true;
                 });
 
+                x.domain(d3.extent(filtered_data,
+                   function(d) { return d.median_earnings; })).nice();
+                y.domain(d3.extent(filtered_data,
+                   function(d) { return d.mean_debt_graduated; })).nice();
+
+
                 // Filter to show selected state
                 filtered_data = filtered_data.filter(function(d,i,arr) {
                 if (selectState == d.state) {
@@ -79,9 +85,6 @@ var buildScatter = function(selectState) {
 
   var plot_data = function(data) {
       console.log(data);
-
-      x.domain(d3.extent(data, function(d) { return d.median_earnings; })).nice();
-      y.domain(d3.extent(data, function(d) { return d.mean_debt_graduated; })).nice();
 
       svg.append("g")
           .attr("class", "axis")
