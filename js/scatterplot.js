@@ -15,7 +15,7 @@ var buildScatter = function(selectState) {
       .append("svg")
       //responsive SVG needs these 2 attributes and no width and height attr
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 550 550")
+      .attr("viewBox", "0 0 800 750")
       //class to make it responsive
       .classed("svg-content-responsive", true)
     .append("g")
