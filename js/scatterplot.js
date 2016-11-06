@@ -4,8 +4,8 @@ var buildScatter = function(selectState) {
 
   // margins
   var margin = {top: 25, right: 0, bottom: 20, left: 45},
-      width = 500 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = 700 - margin.left - margin.right,
+      height = 700 - margin.top - margin.bottom;
 
 
   // create responsive svg
@@ -100,7 +100,7 @@ var buildScatter = function(selectState) {
       svg.append("text")
         .attr("class", "label")
         .attr("x", width)
-        .attr("y", 450)
+        .attr("y", height-5)
         .style("text-anchor", "end")
         .text("Median earnings");
 
@@ -118,7 +118,7 @@ var buildScatter = function(selectState) {
         .style("text-anchor", "end")
         .text("Average debt")
 
-      function scatterHover(d) {
+      function details (d) {
         var details = "<h3>" + d.college + "</h3><span class='category'>Median earnings:</span> $";
         details += d.median_earnings.toLocaleString() + "</br><span class='category'>Average debt:</span> $";
         details += d.mean_debt_graduated.toLocaleString() + "</br><span class='category'>Average net price:</span> $";
@@ -128,16 +128,30 @@ var buildScatter = function(selectState) {
         document.getElementById('schoolinfo').innerHTML = details;
       }
 
+      function scatterHover(d) {
+        details(d);
+        $('.dot').removeClass('hover-dot');
+        $(this).addClass('hover-dot');
+      }
+
+      // function dotClick (d) {
+      //   details(d);
+      //   $(this).on('click', function() {
+      //     $('.dot').removeClass('hover-dot');
+      //     $(this).addClass('hover-dot');
+      //   })
+      // }
+
       svg.selectAll(".dot")
         .data(data)
       .enter().append("circle")
-        // .attr("class", function(d) { return "dot " + d.campus_type })
-        .attr("r", 3.5)
+        .attr("class", "dot")
+        .attr("r", 7)
         .attr("cx", function(d) { return x(d.median_earnings); })
         .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-        .attr("r", 5)
-        .on("click", scatterHover)
-        .on("mouseover", scatterHover);
+        .attr("stroke", "#fff")
+        .on("mouseover", scatterHover)
+        .on("click", scatterHover);
 
   }
 };
