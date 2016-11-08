@@ -2,8 +2,8 @@ var state_data={}
 var buildMap = function(selectAttr) {
 
   // load data
-    var stateFile = "state_data.csv";
-    var institutionFile="institutional_data.csv";
+    var stateFile = "/data/state-data.csv";
+    var institutionFile="/data/institutional-data.csv";
     
     //create state_data dictionary w/ abbr and color
   d3.csv(stateFile,
