@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="mystyle.css">
-<!--
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
 
-<body>
-<div id="tooltip"></div> div to hold tooltip. 
-<body>
--->
 <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="/js/uStates.js"></script>  <!-- creates uStates.  -->
-<script src="/js/data_setup.js"></script>
-    
+
+<div class="buttons">
+    <button class="states active" id="State Funding" >State Funding</button>
+    <button class="states" id = "Debt" >Debt</button>
+    <button class="states" id="Earnings" >Earnings</button>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- d3 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+
+<script src="js/d3.min.js"></script>
+<script src="js/map.js"></script>
+<script src="js/scatterplot.js"></script>
+<script src="js/load_data.js"></script>
 <!--<script src="js/datamaps.usa.min.js"></script>-->
 
 
-    <div class="buttons">
-         
-        <button class="states active" id="State Funding" >State Funding</button>
-        <button class="states" id = "Debt" >Debt</button>
-        <button class="states" id="Earnings" >Earnings</button>
 
 
 <script>
-
-    
 $(".states").on('click', function(){
   $this = this;
   var Attr_ID = $(this).attr('id');
@@ -37,13 +36,9 @@ $(".states").on('click', function(){
   $('button').removeClass('active');
   $(this).addClass('active');
 });
-//
-buildMap('State Funding');
 ////$('.map').html('<div id="usmap"></div>');
-    
-	
-
-
+createVis("map");
 </script>
 
 </body>
+</html>

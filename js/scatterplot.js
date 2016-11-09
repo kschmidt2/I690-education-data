@@ -1,4 +1,4 @@
-var buildScatter = function(selectState) {
+var buildScatter = function(selectState, school_data) {
 
   console.log(selectState);
 
@@ -27,64 +27,21 @@ var buildScatter = function(selectState) {
     var y = d3.scaleLinear()
         .range([height,0]);
 
-  // load data
-  var institutionFile = "data/institutional-data.csv";
-  d3.csv(institutionFile,
-      function(d) {
-          return {
-              college: d.college_name,
-              state: d.state,
-              college_type: d.type_des,
-              campus_type: d.campus_des,
-              median_income: +d.median_family_income,
-              mean_price: +d.avg_net_price,
-              median_earnings: +d.median_earnings,
-              completion_rate: +d.completion_rate,
-              mean_debt_withdrawn: +d.debt_withdrew,
-              mean_debt_graduated: +d.debt_graduated,
-              repayment_rate: +d.repayment_rate
-          };
-      },
-      function(error, data) {
-          if (error != null) {
-              alert("Uh-oh, something went wrong. Try again?");
-          } else {
-                // Filter out schools with non-numbers in numerical fields
-                var filtered_data = data.filter(function(d) {
-                  var number_fields =
-                    ["median_income", "mean_price", "median_earnings",
-                    "completion_rate", "mean_debt_graduated",
-                    "mean_debt_withdrawn", "repayment_rate"];
+    x.domain(d3.extent(school_data,
+        function(d) { return d.median_earnings; })).nice();
+    y.domain(d3.extent(school_data,
+        function(d) { return d.mean_debt_graduated; })).nice();
 
-                  for (var i=0; i < number_fields.length; i++) {
-                    var property_value = d[number_fields[i]];
-                    if (isNaN(property_value) || property_value <= 0) {
-                      return false;
-                    }
-                  }
-                  return true;
-                });
+    // Filter to show selected state
+    filtered_data = school_data.filter(function(d,i,arr) {
+        if (selectState == d.state) {
+            return d.state;
+        } else {
+            return false;
+        }
+    });
 
-                x.domain(d3.extent(filtered_data,
-                   function(d) { return d.median_earnings; })).nice();
-                y.domain(d3.extent(filtered_data,
-                   function(d) { return d.mean_debt_graduated; })).nice();
-
-
-                // Filter to show selected state
-                filtered_data = filtered_data.filter(function(d,i,arr) {
-                if (selectState == d.state) {
-                  return d.state;
-                } else {
-                  return false;
-                }
-              });
-              plot_data(filtered_data);
-          }
-      });
-
-  var plot_data = function(data) {
-      console.log(data);
+    console.log(filtered_data);
 
       svg.append("g")
           .attr("class", "axis")
@@ -116,7 +73,7 @@ var buildScatter = function(selectState) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Average debt")
+        .text("Average debt");
 
       function details (d) {
         var details = "<h3>" + d.college + "</h3><span class='category'>Median earnings:</span> $";
@@ -143,7 +100,7 @@ var buildScatter = function(selectState) {
       // }
 
       svg.selectAll(".dot")
-        .data(data)
+        .data(filtered_data)
       .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 7)
@@ -153,8 +110,7 @@ var buildScatter = function(selectState) {
         .on("mouseover", scatterHover)
         .on("click", scatterHover);
 
-  }
-};
+  };
 
 $(".state").on('click', function(){
   $this = this;
@@ -162,7 +118,7 @@ $(".state").on('click', function(){
   var enterState = '<div class="hidden-xs sf sf-' + stateClass.toLowerCase() + '"></div><h2>' + stateClass + '</h2>';
   $('.scatter').html('<div id="scattercanvas"></div>');
   $('#stateinfo').html(enterState);
-  buildScatter(stateClass);
+  createVis("scatter", stateClass);
   $('.bottom-row').addClass('bottom-border');
   document.getElementById('schoolinfo').innerHTML = "";
 });
