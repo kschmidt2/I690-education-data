@@ -8,9 +8,9 @@
 <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
 
 <div class="buttons">
-    <button class="states active" id="State Funding" >State Funding</button>
-    <button class="states" id = "Debt" >Debt</button>
-    <button class="states" id="Earnings" >Earnings</button>
+    <button class="states active" id="state_funding" >State Funding</button>
+    <button class="states" id = "mean_debt" >Debt</button>
+    <button class="states" id="median_earnings" >Earnings</button>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -30,14 +30,14 @@
 <script>
 $(".states").on('click', function(){
   $this = this;
-  var Attr_ID = $(this).attr('id');
+  var attr_ID = $(this).attr('id');
 ////  $('.map').html('<div id="usmap"></div>');
-  buildMap(Attr_ID);
+  createVis("map", attr_ID);
   $('button').removeClass('active');
   $(this).addClass('active');
 });
 ////$('.map').html('<div id="usmap"></div>');
-createVis("map");
+createVis("map", "state_funding"); // create map vis with default view
 </script>
 
 </body>

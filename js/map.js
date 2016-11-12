@@ -1,6 +1,9 @@
 
 // Build Map
-var buildMap = function(state_data) {
+// attribute is which of the aggregate attributes to graph
+// (This should match one of the variable names in the state data)
+// state_data is the aggregated data for each state
+var buildMap = function(attribute, state_data) {
 
     // margins
     var margin = {top: 20, right: 80, bottom: 290, left: 100},
@@ -24,5 +27,5 @@ var buildMap = function(state_data) {
     // If data join is .data(state_data), then
     // State abbreviations -> d.key
     // State properties -> d.values[0].PROPERTY_NAME
-
+    console.log(attribute +": "+ state_data[0].values[0][attribute]);
 };
