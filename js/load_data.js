@@ -120,7 +120,9 @@ function combine_data(error, raw_school_data, raw_state_data) {
             return {
                 median_earnings: d3.median(states, function(d) { return d.median_earnings; }),
                 mean_debt: d3.mean(states, function(d) { return d.mean_debt_graduated; }),
-                mean_price: d3.mean(states, function(d) { return d.mean_price; })
+                mean_price: d3.mean(states, function(d) { return d.mean_price; }),
+                repayment_rate: d3.mean(states, function(d) { return d.repayment_rate; }),
+                completion_rate: d3.mean(states, function(d) { return d.completion_rate; })
             };
         }).entries(school_data);
 
@@ -144,14 +146,32 @@ function combine_data(error, raw_school_data, raw_state_data) {
         }
     }
 
-    // Call function to render vis
+    // Line chart needs annual data, so draw it now
     if (this.vis_mode == "line") {
         this.vis_function_args.push(annual_state_data);
-    } else {
+        return this.vis_function_list[this.vis_mode]
+            .apply(this, this.vis_function_args);
+    }
+
+    // Map needs most recent year's data, so draw it now
+    else if (this.vis_mode == "map") {
         this.vis_function_args.push(
             get_year_data("2015", annual_state_data)
         );
+        return this.vis_function_list[this.vis_mode]
+            .apply(this, this.vis_function_args);
     }
+
+    // Else we're drawing bar charts, so we need the national averages
+    var state_last_year = get_year_data("2015", annual_state_data);
+    var national_data = {
+        median_earnings: d3.median(state_last_year, function(d) { return d.median_earnings; }),
+        mean_debt: d3.mean(state_last_year, function(d) { return d.mean_debt; }),
+        mean_price: d3.mean(state_last_year, function(d) { return d.mean_price; }),
+        repayment_rate: d3.mean(state_last_year, function(d) { return d.repayment_rate; }),
+        completion_rate: d3.mean(state_last_year, function(d) { return d.completion_rate; })
+    };
+    this.vis_function_args.push(state_last_year, national_data);
     this.vis_function_list[this.vis_mode].apply(this, this.vis_function_args);
 }
 
@@ -163,6 +183,8 @@ function createVis (mode) {
 
     this.vis_mode = mode;
     this.vis_function_args = Array.prototype.slice.call(arguments, 1);
+
+    console.log("Drawing in "+ mode +" mode");
 
     // load data
     var institutionFile = "data/institutional-data.csv";

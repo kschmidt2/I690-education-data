@@ -2,8 +2,9 @@
 // To add more function parameters (e.g., selected state/school),
 // add them to the beginning of the list.
 // Call with createVis("bars", <selection variables>);
-var buildBarCharts = function(school_data, state_data) {
-    console.log(school_data);
+var buildBarCharts = function(state_data, national_data) {
+    console.log(state_data);
+    console.log(national_data);
 };
 
 // Build scatterplot for a state based on school data
