@@ -3,7 +3,7 @@
     <title>Testing</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://npmcdn.com/simple-statistics@2.0.0/dist/simple-statistics.min.js"></script>
-    <script type="text/javascript" src = "js/lineChart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style>
     /* Style information for axis labels */
     .axis-label {
@@ -32,8 +32,12 @@
         -->
         <div id="vis_container">
         </div>
+        <script src="js/map.js"></script>
+        <script src="js/scatterplot.js"></script>
+        <script src="js/lineChart.js"></script>
+        <script src="js/load_data.js"></script>
         <script>
-            buildLineChart("Alabama");
+            createVis("line", "AL");
         </script>
     </body>
 </html>

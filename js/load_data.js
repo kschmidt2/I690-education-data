@@ -10,26 +10,35 @@ var abbrOf = function(state) {
 };
 
 // Extract the given year's data from a rolled-up data object
-var get_year_data = function(target_year, annual_data) {
-    for (var year in annual_data) {
-        if (annual_data[year].key == target_year) {
-            return annual_data[year].values;
+var get_year_data = function(target_year, state_data) {
+    var annual_data = [];
+    for (var state in state_data) {
+        for (var y in state_data[state]) {
+            if (state_data[state][y].year == target_year) {
+                state_data[state][y].state_id = state;
+                annual_data.push(state_data[state][y]);
+            }
         }
     }
-    return -1;
+    return annual_data;
 };
 
 // Define variables to control which vis function we call
-var vis_function_list = {"map": buildMap, "scatter": buildScatter};
+var vis_function_list = {
+    "map": buildMap,
+    "scatter": buildScatter,
+    "line": buildLineChart,
+    "bars": buildBarCharts
+};
 var vis_mode, vis_function_args;
 
-function combine_data(error, school_data, state_data) {
-    var converted_school_data = [],
-        converted_state_data = [];
+function combine_data(error, raw_school_data, raw_state_data) {
+    var school_data = [],
+        state_data = [];
 
     // Select the fields we want from school data
-    school_data.forEach(function(d) {
-        converted_school_data.push({
+    raw_school_data.forEach(function(d) {
+        school_data.push({
             college: d.college_name,
             state: d.state,
             college_type: d.type_des,
@@ -45,11 +54,11 @@ function combine_data(error, school_data, state_data) {
     });
 
     // Filter out schools in territories, not states
-    converted_school_data = converted_school_data.filter(function(d) {
+    school_data = school_data.filter(function(d) {
         return d.state in state_abbr;
     });
     // Filter out school records with non-number values in numerical fields
-    converted_school_data = converted_school_data.filter(function(d) {
+    school_data = school_data.filter(function(d) {
         var number_fields =
           ["median_income", "mean_price", "median_earnings",
           "completion_rate", "mean_debt_graduated",
@@ -64,15 +73,16 @@ function combine_data(error, school_data, state_data) {
         return true;
     });
 
+    // Scatterplot only needs school data, so draw it now
     if (this.vis_mode == "scatter") {
-        this.vis_function_args.push(converted_school_data);
+        this.vis_function_args.push(school_data);
         return this.vis_function_list[this.vis_mode]
             .apply(this, this.vis_function_args);
     }
 
     // Select the fields we want from state data
-    state_data.forEach(function(d) {
-        converted_state_data.push({
+    raw_state_data.forEach(function(d) {
+        state_data.push({
             state: d.State,
             year: d.FiscalYear,
             inflation: 1/(+d.InflationDenom),
@@ -83,7 +93,7 @@ function combine_data(error, school_data, state_data) {
     });
 
     // Filter out state records with non-number values in numerical fields
-    converted_state_data = converted_state_data.filter(function(d) {
+    state_data = state_data.filter(function(d) {
         var number_fields =
           ["inflation", "cost_of_living", "state_funding", "ft_students"];
 
@@ -96,12 +106,12 @@ function combine_data(error, school_data, state_data) {
         return true;
     });
 
-    // Group state data by year then by state
+    // Group state data by state then year
     var nested_state_data = d3.nest()
+        .key(function(d) { return abbrOf(d.state); }).sortKeys(d3.ascending)
         .key(function(d) { return d.year; })
-        .key(function(d) { return abbrOf(d.state); })
             .sortKeys(d3.ascending)
-        .entries(converted_state_data);
+        .entries(state_data);
 
     // Pull aggregate data from school file
     var aggregate_data = d3.nest()
@@ -112,24 +122,35 @@ function combine_data(error, school_data, state_data) {
                 mean_debt: d3.mean(states, function(d) { return d.mean_debt_graduated; }),
                 mean_price: d3.mean(states, function(d) { return d.mean_price; })
             };
-        }).entries(converted_school_data);
+        }).entries(school_data);
 
     // Add aggregated school data to state data
-    for (var i=0; i < nested_state_data[nested_state_data.length - 1].values.length; i++) {
+    for (var i=0; i < aggregate_data.length; i++) {
+        var last = nested_state_data[i].values.length - 1;
         for (var property in aggregate_data[i].value) {
-            nested_state_data[nested_state_data.length - 1].values[i].values[0][property] =
-                    aggregate_data[i].value[property];
+            nested_state_data[i].values[last].values[0][property] =
+                aggregate_data[i].value[property];
+        }
+    }
+
+    // Simplify nested data structure
+    var annual_state_data = {};
+    for (var j=0; j < nested_state_data.length; j++) {
+        var state = nested_state_data[j];
+        annual_state_data[state.key] = [];
+        for (var k=0; k < state.values.length; k++) {
+            var year = state.values[k];
+            annual_state_data[state.key].push(year.values[0]);
         }
     }
 
     // Call function to render vis
-    if (this.vis_mode == "map") {
-        this.vis_function_args.push(
-            get_year_data(nested_state_data[nested_state_data.length-1].key,
-                nested_state_data)
-        );
+    if (this.vis_mode == "line") {
+        this.vis_function_args.push(annual_state_data);
     } else {
-        this.vis_function_args.push(nested_state_data);
+        this.vis_function_args.push(
+            get_year_data("2015", annual_state_data)
+        );
     }
     this.vis_function_list[this.vis_mode].apply(this, this.vis_function_args);
 }

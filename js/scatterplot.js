@@ -1,3 +1,13 @@
+// Build bar charts comparing school, state, and national averages
+// To add more function parameters (e.g., selected state/school),
+// add them to the beginning of the list.
+// Call with createVis("bars", <selection variables>);
+var buildBarCharts = function(school_data, state_data) {
+    console.log(school_data);
+};
+
+// Build scatterplot for a state based on school data
+// Call with createVis("scatter", selectedState);
 var buildScatter = function(selectState, school_data) {
 
   console.log(selectState);

@@ -25,7 +25,11 @@ var buildMap = function(attribute, state_data) {
 
     // Add map code here
     // If data join is .data(state_data), then
-    // State abbreviations -> d.key
-    // State properties -> d.values[0].PROPERTY_NAME
-    console.log(attribute +": "+ state_data[0].values[0][attribute]);
+    // State abbreviations -> d.state_id
+    // State properties -> d[attribute]
+    // The console line here provides an example:
+    for (var i=0; i<state_data.length; i++) {
+        var d = state_data[i];
+        console.log(d.state_id +" has an average "+ attribute +" of "+ d[attribute]);
+    }
 };
