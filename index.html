@@ -17,6 +17,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- d3 -->
     <script src="js/d3.min.js"></script>
+      
+    <!-- d3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="js/datamaps.usa.min.js"></script>
+
 
   </head>
   <body>
@@ -25,7 +31,14 @@
 
       <div class="row top-row">
         <div class="col-xs-12 col-sm-8">
-          <img src="mapdemo.png" class="img-responsive">
+            <div class="buttons" id="but">
+                <button class="attr" id="state_funding" >State Funding</button>
+                <button class="attr" id = "cost_of_living" >Debt</button>
+                <button class="attr active" id="ft_students" >Earnings</button>
+            </div>
+            <div class="map"></div>
+            
+            
           <span class="state" id="CA">California</span>
           <span class="state" id="NC">North Carolina</span>
           <span class="state" id="NY">New York</span>
@@ -61,6 +74,7 @@
 
 
     <script src="js/map.js"></script>
+<!--    <script src="js/placeholder_data.js"></script>-->
     <script src="js/scatterplot.js"></script>
     <script src="js/lineChart.js"></script>
     <script src="js/load_data.js"></script>
