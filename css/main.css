@@ -132,6 +132,9 @@ h3 {
 .hover-dot {
   fill: #1f3f48;
 }
+.selected-dot{
+  fill: #FFA500;
+}
 
 .datamaps-subunit:hover {
   cursor: pointer;
