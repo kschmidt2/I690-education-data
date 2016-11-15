@@ -2,17 +2,27 @@
 // To add more function parameters (e.g., selected state/school),
 // add them to the beginning of the list.
 // Call with createVis("bars", <selection variables>);
+
+/*Global varaibles*/
+//var state_data;
+var filtered_data_global;
+var svg_global;
+var school_data_global;
+var x_global;
+var y_global;
+
+
 var buildBarCharts = function(state_data, national_data) {
     //console.log(state_data);
     //console.log(national_data);
+
 };
 
 // Build scatterplot for a state based on school data
 // Call with createVis("scatter", selectedState);
 var buildScatter = function(selectState, school_data) {
 
-
-
+  school_data_global = school_data;
 
   // margins
   var margin = {top: 25, right: 0, bottom: 55, left: 80},
@@ -33,6 +43,8 @@ var buildScatter = function(selectState, school_data) {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+      svg_global = svg;
+
     var x = d3v4.scaleLinear()
         .range([0,width]);
 
@@ -52,8 +64,9 @@ var buildScatter = function(selectState, school_data) {
             return false;
         }
     });
-  
-
+      x_global = x;
+      y_global = y;
+      filtered_data_global = filtered_data;
       //Creates the dropdown with only the schools in the selected state
 
       //Retrieves the schools in the state. 
@@ -131,41 +144,41 @@ var buildScatter = function(selectState, school_data) {
 
 
       //I would not want this function to be here...
-      function selectSchool(selectedSchool){
-        
-        if (selectedSchool === "Show all"){
-          svg.selectAll(".dot")
-            .data(filtered_data)
-          .enter().append("circle")
-            .attr("class", "dot") 
-            .attr("r", 10)
-            .attr("cx", function(d) { return x(d.median_earnings); })
-            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-            .attr("stroke", "#fff")
-            .on("mouseover", scatterHover)
-            .on("click", scatterHover);
-        }
-        else{ 
-          var circles = svg.selectAll(".dot");
-          console.log(circles);
-          //Shows the required circle in orange
-          circles.remove();
+      // function selectSchool(selectedSchool){
+      //   console.log(selectedSchool);
+      //   if (selectedSchool === "Show all"){
+      //     svg.selectAll(".dot")
+      //       .data(filtered_data)
+      //     .enter().append("circle")
+      //       .attr("class", "dot") 
+      //       .attr("r", 10)
+      //       .attr("cx", function(d) { return x(d.median_earnings); })
+      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+      //       .attr("stroke", "#fff")
+      //       .on("mouseover", scatterHover)
+      //       .on("click", scatterHover);
+      //   }
+      //   else{ 
+      //     var circles = svg.selectAll(".dot");
+      //     console.log(circles);
+      //     //Shows the required circle in orange
+      //     circles.remove();
 
-          svg.selectAll(".dot")
-          .data(filtered_data)
-          .enter().append("circle")
-            .attr("class", "dot")
-            .attr("r", 10)
-            .attr("cx", function(d) { return x(d.median_earnings); })
-            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-            .attr("stroke", "#fff")
-            .style("fill", function(d) { if(d.college === selectedSchool) return "orange"; })
-            .on("mouseover", scatterHover)
-            .on("click", scatterHover);
+      //     svg.selectAll(".dot")
+      //     .data(filtered_data)
+      //     .enter().append("circle")
+      //       .attr("class", "dot")
+      //       .attr("r", 10)
+      //       .attr("cx", function(d) { return x(d.median_earnings); })
+      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+      //       .attr("stroke", "#fff")
+      //       .style("fill", function(d) { if(d.college === selectedSchool) return "orange"; })
+      //       .on("mouseover", scatterHover)
+      //       .on("click", scatterHover);
 
-          }
+      //     }
         
-      }
+      // }
 
   };
 
@@ -248,40 +261,47 @@ var buildScatter = function(selectState, school_data) {
     console.log("I tried to add the event");
   }
 
-      // function selectSchool(selectedSchool){
+      function selectSchool(selectedSchool){
+
+
+        //Initialization of variables
+        var filtered_data = filtered_data_global;
+        var svg = svg_global;
+        var school_data = school_data_global;
+        var x = x_global;
+        var y = y_global;
+
+        console.log(selectedSchool);
+        if (selectedSchool === "Show all"){
+          svg.selectAll(".dot")
+            .data(filtered_data)
+          .enter().append("circle")
+            .attr("class", "dot") 
+            .attr("r", 10)
+            .attr("cx", function(d) { return x(d.median_earnings); })
+            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+            .attr("stroke", "#fff")
+            .on("mouseover", scatterHover)
+            .on("click", scatterHover);
+        }
+        else{ 
+          var circles = svg.selectAll(".dot");
+          console.log(circles);
+          //Shows the required circle in orange
+          circles.remove();
+
+          svg.selectAll(".dot")
+          .data(filtered_data)
+          .enter().append("circle")
+            .attr("class", "dot")
+            .attr("r", 10)
+            .attr("cx", function(d) { return x(d.median_earnings); })
+            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+            .attr("stroke", "#fff")
+            .style("fill", function(d) { if(d.college === selectedSchool) return "orange"; })
+            .on("mouseover", scatterHover)
+            .on("click", scatterHover);
+
+          }
         
-
-      //   console.log("SELECTED SCHOOL HERE" + selectedSchool);
-
-      //   if (selectedSchool === "Show all"){
-      //     svg.selectAll(".dot")
-      //       .data(filtered_data)
-      //     .enter().append("circle")
-      //       .attr("class", "dot") 
-      //       .attr("r", 10)
-      //       .attr("cx", function(d) { return x(d.median_earnings); })
-      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-      //       .attr("stroke", "#fff")
-      //       .on("mouseover", scatterHover)
-      //       .on("click", scatterHover);
-      //   }
-      //   else{ 
-      //     var circles = svg.selectAll(".dot");
-      //     console.log(circles);
-      //     //Removes all the points and only shows the one that is required
-      //     circles.remove();
-
-      //     svg.selectAll(".dot")
-      //     .data(filtered_data)
-      //     .enter().append("circle")
-      //       .attr("class", "dot")
-      //       .attr("r", 10)
-      //       .attr("cx", function(d) {  if(d.college === selectedSchool ) return x(d.median_earnings); })
-      //       .attr("cy", function(d) { if(d.college === selectedSchool )  return y(d.mean_debt_graduated); })
-      //       .attr("stroke", "#fff")
-      //       .on("mouseover", scatterHover)
-      //       .on("click", scatterHover);
-
-      //     }
-        
-      // }
+      }

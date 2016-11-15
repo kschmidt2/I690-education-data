@@ -53,11 +53,6 @@
             <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-12 col-sm-3 pull-sm-9 about-data">
-                <select class="selectpicker" id = "school-selector">
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Relish</option>
-                </select>
 
                   <h4>About the data</h4>
                   <p>This is where the information about the data goes. This is where the information about the data goes. This is where the information about the data goes. This is where the information about the data goes. This is where the information about the data goes.</p>
@@ -77,6 +72,9 @@
           <div class="col-xs-12 scatter">
           </div>
           <div id="schoolinfo"></div>
+            <select class="selectpicker" id = "school-selector" onchange = "selectSchool(this.value)">
+              <option>Show all</option>
+            </select>
         </div>
 
       </div>
