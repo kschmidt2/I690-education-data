@@ -11,38 +11,16 @@ var buildBarCharts = function(state_data, national_data) {
 // Call with createVis("scatter", selectedState);
 var buildScatter = function(selectState, school_data) {
 
-  //Dropdown
+  //Creates the dropdown with only the schools in the selected state
   console.log(selectState);
   
-  var allSchoolsInState;
-  d3v4.extent(school_data,
-        function(d) { allSchoolsInState = d.college; 
-                      return d.college; });
-  //console.log(school_data.length);
-  //console.log(school_data);
-  //Retrieves the schools in the state. Helps to populate the selector
-  var schools = [];
-  var j = 0;
-  for (var i = 0; i < school_data.length; i++){
-    if (school_data[i].state == "MA"){
-      schools[j] = school_data[i].college;
-      j++;
-    }else{
-      console.log("It didnt match");
-    }
-  }
-  //console.log(schools);
-  //console.log(school_data.length);
-  //console.log(allSchoolsInState);
+  //Retrieves the schools in the state. 
+  var schools = populateSchools("MA", school_data);
+  
+  //Helps to fill in all of the schools in the current selection
+  populateSelector(schools);
 
-  var selector = document.getElementById('school-selector');
-  console.log(selector);
-  var newOptions = "<select class='selectpicker' id = 'school-selector'>";
-  for (var i = 0; i < schools.length; i++) {
-    newOptions += "<option>" + schools[i] + "</option>";
-  }
-  newOptions += "</select>";
-  document.getElementById('school-selector').innerHTML = newOptions;
+
 
   // margins
   var margin = {top: 25, right: 0, bottom: 55, left: 80},
@@ -167,3 +145,30 @@ var buildScatter = function(selectState, school_data) {
   //     $('.bottom-row').addClass('bottom-border');
   //     document.getElementById('schoolinfo').innerHTML = "";
   // }
+
+  //Helper functions
+
+    function populateSchools(currentState, school_data){
+    var schools = [];
+    var j = 0;
+    for (var i = 0; i < school_data.length; i++){
+      if (school_data[i].state == currentState){
+        schools[j] = school_data[i].college;
+        j++;
+      }else{
+        console.log("It didnt match");
+      }
+     }
+      return schools;
+    }
+  //Helps to populate the selector
+  function populateSelector(schools){
+    var selector = document.getElementById('school-selector');
+    console.log(selector);
+    var newOptions = "<select class='selectpicker' id = 'school-selector'>";
+    for (var i = 0; i < schools.length; i++) {
+      newOptions += "<option>" + schools[i] + "</option>";
+    }
+    newOptions += "</select>";
+    document.getElementById('school-selector').innerHTML = newOptions;
+  }
