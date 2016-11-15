@@ -33,7 +33,7 @@ var buildScatter = function(selectState, school_data) {
   // create responsive svg
   var svg = d3v4.select("#scattercanvas")
       .append("div")
-      .classed("svg-container-line-svg", true) //container class to make it responsive
+      .classed("svg-container-line " + selectState + "-svg", true) //container class to make it responsive
       .append("svg")
       //responsive SVG needs these 2 attributes and no width and height attr
       .attr("preserveAspectRatio", "xMinYMin meet")
@@ -136,7 +136,6 @@ var buildScatter = function(selectState, school_data) {
         .on("mouseover", scatterHover)
         .on("click", scatterHover);
 
-<<<<<<< HEAD
 
       console.log("I have reached this part");
 
@@ -244,7 +243,7 @@ var buildScatter = function(selectState, school_data) {
     var selector = document.getElementById('school-selector');
     console.log(selector);
     var newOptions = "<select class='selectpicker' id = 'school-selector'>";
-    newOptions += "<option>Show all</option>";
+    newOptions += "<option>" + "Show all" + "</option>";
 
     for (var i = 0; i < schools.length; i++) {
       newOptions += "<option>" + schools[i] + "</option>";
@@ -303,23 +302,6 @@ var buildScatter = function(selectState, school_data) {
             .on("mouseover", scatterHover)
             .on("click", scatterHover);
 
-            displayDataFromSelectedDataPoint(filtered_data, selectedSchool);
           }
 
       }
-
-      }
-
-
-      function displayDataFromSelectedDataPoint(filtered_data, selectedSchool){
-            var currentDataPoint;
-            for (var i = 0; i < filtered_data.length; i ++){
-
-              if (filtered_data[i].college === selectedSchool){
-                currentDataPoint = filtered_data[i];
-              }
-            }
-
-            scatterHover(currentDataPoint);
-      }
->>>>>>> 4e1a6e2abb0cd1703a9d32aaef3ea9b7c8ce5eae
