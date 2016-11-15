@@ -20,7 +20,7 @@ var buildScatter = function(selectState, school_data) {
 
 
   // create responsive svg
-  var svg = d3.select("#scattercanvas")
+  var svg = d3v4.select("#scattercanvas")
       .append("div")
       .classed("svg-container-line " + selectState + "-svg", true) //container class to make it responsive
       .append("svg")
@@ -32,15 +32,15 @@ var buildScatter = function(selectState, school_data) {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var x = d3.scaleLinear()
+    var x = d3v4.scaleLinear()
         .range([0,width]);
 
-    var y = d3.scaleLinear()
+    var y = d3v4.scaleLinear()
         .range([height,0]);
 
-    x.domain(d3.extent(school_data,
+    x.domain(d3v4.extent(school_data,
         function(d) { return d.median_earnings; })).nice();
-    y.domain(d3.extent(school_data,
+    y.domain(d3v4.extent(school_data,
         function(d) { return d.mean_debt_graduated; })).nice();
 
     // Filter to show selected state
@@ -57,7 +57,7 @@ var buildScatter = function(selectState, school_data) {
       svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(x)
+          .call(d3v4.axisBottom(x)
             .tickFormat(function(d) { return "$" + d.toLocaleString(); }))
         .selectAll("text")
           .attr("y", 5)
@@ -75,7 +75,7 @@ var buildScatter = function(selectState, school_data) {
       svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(0,0)")
-          .call(d3.axisLeft(y)
+          .call(d3v4.axisLeft(y)
             .tickFormat(function(d) { return "$" + d.toLocaleString(); }));
 
       svg.append("text")
@@ -114,7 +114,7 @@ var buildScatter = function(selectState, school_data) {
         .data(filtered_data)
       .enter().append("circle")
         .attr("class", "dot")
-        .attr("r", 7)
+        .attr("r", 10)
         .attr("cx", function(d) { return x(d.median_earnings); })
         .attr("cy", function(d) { return y(d.mean_debt_graduated); })
         .attr("stroke", "#fff")
@@ -123,13 +123,14 @@ var buildScatter = function(selectState, school_data) {
 
   };
 
-$(".state").on('click', function(){
-  $this = this;
-  var stateClass = $(this).attr('id');
-  var enterState = '<div class="hidden-xs sf sf-' + stateClass.toLowerCase() + '"></div><h2>' + stateClass + '</h2>';
-  $('.scatter').html('<div id="scattercanvas"></div>');
-  $('#stateinfo').html(enterState);
-  createVis("scatter", stateClass);
-  $('.bottom-row').addClass('bottom-border');
-  document.getElementById('schoolinfo').innerHTML = "";
-});
+
+  // function stateClick () {
+  //     $this = this;
+  //     var stateClass = $(this).attr('class');
+  //     var enterState = '<div class="hidden-xs sf sf-' + stateClass.toLowerCase() + '"></div><h2>' + stateClass + '</h2>';
+  //     $('.scatter').html('<div id="scattercanvas"></div>');
+  //     $('#stateinfo').html(enterState);
+  //     createVis("scatter", stateClass);
+  //     $('.bottom-row').addClass('bottom-border');
+  //     document.getElementById('schoolinfo').innerHTML = "";
+  // }

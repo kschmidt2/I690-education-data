@@ -17,7 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- d3 -->
     <script src="js/d3.min.js"></script>
-      
+
     <!-- d3 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
@@ -29,41 +29,57 @@
 
     <div class="container">
 
-      <div class="row top-row">
-        <div class="col-xs-12 col-sm-8">
-            <div class="buttons" id="but">
-                <button class="attr" id="state_funding" >State Funding</button>
-                <button class="attr" id = "cost_of_living" >Debt</button>
-                <button class="attr active" id="ft_students" >Earnings</button>
-            </div>
-            <div class="map"></div>
-            
-            
-          <span class="state" id="CA">California</span>
-          <span class="state" id="NC">North Carolina</span>
-          <span class="state" id="NY">New York</span>
-          <span class="state" id="NJ">New Jersey</span>
-        </div>
-        <div class="col-xs-12 col-sm-4 intro">
+      <div class="row">
+        <div class="hidden-xs col-sm-2"></div>
+        <div class="col-xs-12 col-sm-8 intro">
           <h1>This is where our headline goes</h1>
           <p>This is where some intro text goes. Going to put some information about this project here so people know what it's about. There will also be an about the data button to display the data.</p>
-          <button>About the data</button>
         </div>
-        <div class="hover-info"></div>
       </div>
 
-
-      <div class="row bottom-row">
-        <div class="hidden-xs col-sm-1"></div>
-        <div class="col-xs-12 col-sm-5 scatter">
+      <div class="row main-row">
+        <div class="col-xs-12 col-sm-8 map-div">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="buttons" id="but">
+                  <button class="attr active" id="state_funding" >State Funding</button>
+                  <button class="attr" id = "mean_debt" >Average Debt</button>
+                  <button class="attr" id="median_earnings" >Median Earnings</button>
+              </div>
+              <div class="map"></div>
+            </div>
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-12 col-sm-3 pull-sm-9 about-data">
+                  <h4>About the data</h4>
+                  <p>This is where the information about the data goes. This is where the information about the data goes. This is where the information about the data goes. This is where the information about the data goes. This is where the information about the data goes.</p>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                  <div class="hover-info"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-xs-12 col-sm-5">
-          <div id="stateinfo"></div>
+
+        <div class="col-xs-12 col-sm-4 right-row">
+          <div class="col-xs-12">
+            <div id="stateinfo"></div>
+          </div>
+          <div class="col-xs-12 scatter">
+          </div>
           <div id="schoolinfo"></div>
         </div>
+
+      </div>
+
+
+      <!-- <div class="row bottom-row">
+        <div class="hidden-xs col-sm-1"></div>
+
         <div class="hidden-xs col-sm-1">
         </div>
-      </div>
+      </div> -->
 
       <footer>
         Project produced by Moazzam Khan, Natalia Lopez, Kiersten Schmidt and Katherine Shaw for INLS690 at the University of North Carolina at Chapel Hill.

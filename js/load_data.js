@@ -87,7 +87,7 @@ function combine_data(error, raw_school_data, raw_state_data) {
             year: d.FiscalYear,
             inflation: 1/(+d.InflationDenom),
             cost_of_living: +d.CostOfLiving,
-            state_funding: +d.StateSupport,
+            state_funding: +d.SupportPerStudent,
             ft_students: +d.FTEnrollment
         });
     });
@@ -107,22 +107,22 @@ function combine_data(error, raw_school_data, raw_state_data) {
     });
 
     // Group state data by state then year
-    var nested_state_data = d3.nest()
-        .key(function(d) { return abbrOf(d.state); }).sortKeys(d3.ascending)
+    var nested_state_data = d3v4.nest()
+        .key(function(d) { return abbrOf(d.state); }).sortKeys(d3v4.ascending)
         .key(function(d) { return d.year; })
-            .sortKeys(d3.ascending)
+            .sortKeys(d3v4.ascending)
         .entries(state_data);
 
     // Pull aggregate data from school file
-    var aggregate_data = d3.nest()
-        .key(function(d) { return d.state; }).sortKeys(d3.ascending)
+    var aggregate_data = d3v4.nest()
+        .key(function(d) { return d.state; }).sortKeys(d3v4.ascending)
         .rollup(function(states) {
             return {
-                median_earnings: d3.median(states, function(d) { return d.median_earnings; }),
-                mean_debt: d3.mean(states, function(d) { return d.mean_debt_graduated; }),
-                mean_price: d3.mean(states, function(d) { return d.mean_price; }),
-                repayment_rate: d3.mean(states, function(d) { return d.repayment_rate; }),
-                completion_rate: d3.mean(states, function(d) { return d.completion_rate; })
+                median_earnings: d3v4.median(states, function(d) { return d.median_earnings; }),
+                mean_debt: d3v4.mean(states, function(d) { return d.mean_debt_graduated; }),
+                mean_price: d3v4.mean(states, function(d) { return d.mean_price; }),
+                repayment_rate: d3v4.mean(states, function(d) { return d.repayment_rate; }),
+                completion_rate: d3v4.mean(states, function(d) { return d.completion_rate; })
             };
         }).entries(school_data);
 
@@ -165,11 +165,11 @@ function combine_data(error, raw_school_data, raw_state_data) {
     // Else we're drawing bar charts, so we need the national averages
     var state_last_year = get_year_data("2015", annual_state_data);
     var national_data = {
-        median_earnings: d3.median(state_last_year, function(d) { return d.median_earnings; }),
-        mean_debt: d3.mean(state_last_year, function(d) { return d.mean_debt; }),
-        mean_price: d3.mean(state_last_year, function(d) { return d.mean_price; }),
-        repayment_rate: d3.mean(state_last_year, function(d) { return d.repayment_rate; }),
-        completion_rate: d3.mean(state_last_year, function(d) { return d.completion_rate; })
+        median_earnings: d3v4.median(state_last_year, function(d) { return d.median_earnings; }),
+        mean_debt: d3v4.mean(state_last_year, function(d) { return d.mean_debt; }),
+        mean_price: d3v4.mean(state_last_year, function(d) { return d.mean_price; }),
+        repayment_rate: d3v4.mean(state_last_year, function(d) { return d.repayment_rate; }),
+        completion_rate: d3v4.mean(state_last_year, function(d) { return d.completion_rate; })
     };
     this.vis_function_args.push(state_last_year, national_data);
     this.vis_function_list[this.vis_mode].apply(this, this.vis_function_args);
@@ -190,9 +190,9 @@ function createVis (mode) {
     var institutionFile = "data/institutional-data.csv";
     var stateFile = "data/state-data.csv";
 
-    var q = d3.queue()
-        .defer(d3.csv, institutionFile)
-        .defer(d3.csv, stateFile)
+    var q = d3v4.queue()
+        .defer(d3v4.csv, institutionFile)
+        .defer(d3v4.csv, stateFile)
         .await(combine_data);
 
 }

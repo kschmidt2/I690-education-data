@@ -37,11 +37,13 @@
 
 
 var buildMap = function (AttrID, state_data){
-    
-        var series = data;
-        var state_data = {};
-        
-        var colors = {state_funding: ["#d2d9da","#1f3f48"], cost_of_living: ["#ebbaba", "#c73838"], ft_students: ["#c1c3da", "#4e5394"] };
+
+  console.log(state_data);
+
+        var series = state_data;
+        var dataset = {};
+
+        var colors = {state_funding: ["#d2d9da","#1f3f48"], mean_debt: ["#daf0fc", "#47b4f2"], median_earnings: ["#eff3d3", "#AFC436"] };
 
         var onlyValues = series.map(function(d){ return d[AttrID]; });
         var minValue = Math.min.apply(null, onlyValues),
@@ -50,58 +52,67 @@ var buildMap = function (AttrID, state_data){
         var paletteScale = d3.scale.linear()
             .domain([minValue,maxValue])
             .range([colors[AttrID][0], colors[AttrID][1]]);
-        
-        
-        series.forEach(function(d){     
+
+
+        series.forEach(function(d){
             var st=abbrOf(d.state);
             value = d[AttrID];
-            if (d.year=="2014"){
-                state_data[st]={numberofThings: value, fillColor:  paletteScale(value)}}});
+            dataset[st]={numberofThings: value, fillColor:  paletteScale(value)}});
 
-        
-        
-        console.log(state_data);
         var SelectedAttr=AttrID;
         console.log(AttrID)
-        
+
 //        if (SelectedAttr == "state_funding"){
             var map = new Datamap({
-            
+
             element: document.getElementById('usmap'),
             scope: 'usa',
-            fills: { defaultFill: '#9999FF'},
-            data: state_data,
+            data: dataset,
             responsive: true,
             geographyConfig: {
               highlightBorderWidth: 0,
-                highlightFillColor:  colors[AttrID][1],
+                highlightFillColor:  '#ECEDEB',
 ////                // show desired information in tooltip
                 popupTemplate: function(geo, data) {
 //                    // don't show tooltip if country don't present in dataset
                     if (!data) { return ; }
 //                    // tooltip content
                     return ['<div class="hoverinfo">',
-                        '<strong>', geo.properties.name, '</strong>', 
+                        '<strong>', geo.properties.name, '</strong>',
                         '<br>Amount: <strong>$', data.numberofThings.toLocaleString(), '</strong>',
                         '</div>'].join('');;
 
                 }
+            },
+            done: function(datamap) {
+            datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography){
+              $this = this;
+              $('.datamaps-subunit').removeClass('datamaps-subunit');
+              var stateClass = $(this).attr('class');
+              var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
+              $('.scatter').html('<div id="scattercanvas"></div>');
+              $('#stateinfo').html(enterState);
+              $('.map-div').addClass('border-right');
+              createVis("scatter", stateClass);
+              document.getElementById('schoolinfo').innerHTML = "";
+            });
         }
         }
             );
-        
+
         $(window).on('resize', function() {
            map.resize();
         });
-        
+
           };
 
 
 $(".attr").on('click', function(){
-  $this = this 
+  $this = this
   var Data_type = $(this).attr('id');
   $('.map').html('<div id="usmap"></div>');
     createVis("map", Data_type);
+  $(".attr").removeClass('active');
+  $(this).addClass('active');
 
 });
-
