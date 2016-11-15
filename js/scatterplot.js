@@ -136,50 +136,6 @@ var buildScatter = function(selectState, school_data) {
         .on("mouseover", scatterHover)
         .on("click", scatterHover);
 
-
-      console.log("I have reached this part");
-
-      selectSchool("Maine Maritime Academy");
-
-
-
-      //I would not want this function to be here...
-      // function selectSchool(selectedSchool){
-      //   console.log(selectedSchool);
-      //   if (selectedSchool === "Show all"){
-      //     svg.selectAll(".dot")
-      //       .data(filtered_data)
-      //     .enter().append("circle")
-      //       .attr("class", "dot") 
-      //       .attr("r", 10)
-      //       .attr("cx", function(d) { return x(d.median_earnings); })
-      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-      //       .attr("stroke", "#fff")
-      //       .on("mouseover", scatterHover)
-      //       .on("click", scatterHover);
-      //   }
-      //   else{ 
-      //     var circles = svg.selectAll(".dot");
-      //     console.log(circles);
-      //     //Shows the required circle in orange
-      //     circles.remove();
-
-      //     svg.selectAll(".dot")
-      //     .data(filtered_data)
-      //     .enter().append("circle")
-      //       .attr("class", "dot")
-      //       .attr("r", 10)
-      //       .attr("cx", function(d) { return x(d.median_earnings); })
-      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-      //       .attr("stroke", "#fff")
-      //       .style("fill", function(d) { if(d.college === selectedSchool) return "orange"; })
-      //       .on("mouseover", scatterHover)
-      //       .on("click", scatterHover);
-
-      //     }
-        
-      // }
-
   };
 
 
@@ -302,6 +258,20 @@ var buildScatter = function(selectState, school_data) {
             .on("mouseover", scatterHover)
             .on("click", scatterHover);
 
+            displayDataFromSelectedDataPoint(filtered_data, selectedSchool);
           }
         
+      }
+
+
+      function displayDataFromSelectedDataPoint(filtered_data, selectedSchool){
+            var currentDataPoint;
+            for (var i = 0; i < filtered_data.length; i ++){
+
+              if (filtered_data[i].college === selectedSchool){
+                currentDataPoint = filtered_data[i];
+              }
+            }
+
+            scatterHover(currentDataPoint);
       }
