@@ -38,6 +38,7 @@ body {
 
 .right-row {
   padding-left: 15px;
+  display:none;
   /*min-height: 100vh;*/
 }
 
@@ -147,6 +148,10 @@ h3 {
 
 #scattercanvas text {
   font-size: 20px;
+}
+
+.selectpicker {
+  display: none;
 }
 
 /*styles to make the svg responsive*/

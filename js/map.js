@@ -90,10 +90,12 @@ var buildMap = function (AttrID, state_data){
               $('.datamaps-subunit').removeClass('datamaps-subunit');
               var stateClass = $(this).attr('class');
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
-              $('.scatter').html('<div id="scattercanvas"></div>');
+              $('.scatter').html('<div id="scattercanvas"></div>').fadeIn('fast');
               $('#stateinfo').html(enterState);
               createVis("scatter", stateClass);
               document.getElementById('schoolinfo').innerHTML = "";
+              $('.selectpicker').fadeIn('fast');
+              $('.right-row').fadeIn('fast');
             });
         }
         }
@@ -110,8 +112,7 @@ $(".attr").on('click', function(){
   $this = this
   var Data_type = $(this).attr('id');
   $('.map').html('<div id="usmap"></div>');
-    createVis("map", Data_type);
+  createVis("map", Data_type);
   $(".attr").removeClass('active');
   $(this).addClass('active');
-
 });
