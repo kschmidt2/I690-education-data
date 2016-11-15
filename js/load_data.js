@@ -87,7 +87,7 @@ function combine_data(error, raw_school_data, raw_state_data) {
             year: d.FiscalYear,
             inflation: 1/(+d.InflationDenom),
             cost_of_living: +d.CostOfLiving,
-            state_funding: +d.SupportPerStudent,
+            state_funding: +d.StateSupport,
             ft_students: +d.FTEnrollment
         });
     });
