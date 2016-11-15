@@ -52,9 +52,10 @@ var buildMap = function (selected_attr, state_data) {
               var stateClass = $(this).attr('class');
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
               $('.scatter').html('<div id="scattercanvas"></div>').fadeIn('fast');
+              $('#scattercanvas').fadeIn(500);
               $('#stateinfo').html(enterState);
               createVis("scatter", stateClass);
-              document.getElementById('schoolinfo').innerHTML = "";
+              $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
             });
         }

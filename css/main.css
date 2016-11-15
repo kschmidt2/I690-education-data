@@ -145,6 +145,10 @@ h3 {
   margin-left: -12%;
 }
 
+#scattercanvas {
+  display:none;
+}
+
 #scattercanvas text {
   font-size: 20px;
 }
@@ -157,7 +161,7 @@ select {
 
 .selectpicker {
   display: none;
-  width: 300px;
+  width: 280px;
   border: 1px solid #47b4f2;
   color: #47b4f2;
   border-radius: 0;
