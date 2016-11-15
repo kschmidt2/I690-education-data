@@ -1,7 +1,7 @@
 var buildMap = function (selected_attr, state_data) {
     // Debugging statements: log arguments
     // console.log(selected_attr);
-    // console.log(state_data);
+    console.log(state_data);
 
     // Normalize state funding by number of students
     if (selected_attr == "state_funding") {
@@ -9,7 +9,7 @@ var buildMap = function (selected_attr, state_data) {
     }
 
     // Define color scale
-    var colors = {state_funding: ["#d2d9da","#1f3f48"], mean_debt: ["#daf0fc", "#47b4f2"], median_earnings: ["#eff3d3", "#AFC436"] };
+    var colors = {funding_per_student: ["#d2d9da","#1f3f48"], mean_debt: ["#daf0fc", "#47b4f2"], median_earnings: ["#eff3d3", "#AFC436"] };
 
     var paletteScale = d3.scale.linear()
         .domain(d3v4.extent(state_data,
@@ -21,7 +21,7 @@ var buildMap = function (selected_attr, state_data) {
     state_data.forEach(function(d){
         dataset[d.state_id] = {
             numberofThings: d[selected_attr],
-            fillColor:  paletteScale(value)
+            fillColor:  paletteScale(d[selected_attr])
         };
     });
 
@@ -41,7 +41,7 @@ var buildMap = function (selected_attr, state_data) {
                 // tooltip content
                 return ['<div class="hoverinfo">',
                         '<strong>', geo.properties.name, '</strong>',
-                        '<br>Amount: <strong>$', data.numberofThings.toLocaleString(), '</strong>',
+                        '<br>Amount: <strong>$', Math.round(data.numberofThings).toLocaleString(), '</strong>',
                         '</div>'].join('');
             }
         },
