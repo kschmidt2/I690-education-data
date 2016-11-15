@@ -11,14 +11,6 @@ var buildBarCharts = function(state_data, national_data) {
 // Call with createVis("scatter", selectedState);
 var buildScatter = function(selectState, school_data) {
 
-  //Creates the dropdown with only the schools in the selected state
-  console.log(selectState);
-  
-  //Retrieves the schools in the state. 
-  var schools = populateSchools("MA", school_data);
-  
-  //Helps to fill in all of the schools in the current selection
-  populateSelector(schools);
 
 
 
@@ -60,8 +52,17 @@ var buildScatter = function(selectState, school_data) {
             return false;
         }
     });
+  
 
-    //console.log(filtered_data);
+      //Creates the dropdown with only the schools in the selected state
+
+      //Retrieves the schools in the state. 
+      var schools = populateSchoolsFromFilteredData(filtered_data);
+      
+      //Helps to fill in all of the schools in the current selection
+      populateSelector(schools);
+
+  
 
       svg.append("g")
           .attr("class", "axis")
@@ -147,6 +148,16 @@ var buildScatter = function(selectState, school_data) {
   // }
 
   //Helper functions
+    function populateSchoolsFromFilteredData(filtered_data){
+    var schools = [];
+    var j = 0;
+    for (var i = 0; i < filtered_data.length; i++){
+        schools[j] = filtered_data[i].college;
+        j++;
+     }
+      return schools;
+    }
+
 
     function populateSchools(currentState, school_data){
     var schools = [];
