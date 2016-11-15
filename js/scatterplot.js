@@ -14,7 +14,7 @@ var buildScatter = function(selectState, school_data) {
   console.log(selectState);
 
   // margins
-  var margin = {top: 25, right: 0, bottom: 20, left: 45},
+  var margin = {top: 25, right: 0, bottom: 55, left: 80},
       width = 700 - margin.left - margin.right,
       height = 700 - margin.top - margin.bottom;
 
@@ -60,8 +60,8 @@ var buildScatter = function(selectState, school_data) {
           .call(d3v4.axisBottom(x)
             .tickFormat(function(d) { return "$" + d.toLocaleString(); }))
         .selectAll("text")
-          .attr("y", 5)
-          .attr("x", -42)
+          .attr("y", 10)
+          .attr("x", -80)
           .attr("transform", "rotate(-45)")
           .style("text-anchor", "start");
 

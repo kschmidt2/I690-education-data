@@ -70,10 +70,6 @@ button.active {
   border: 1px solid #1f3f48;
 }
 
-.border-right {
-  border-right: 3px solid #ECEDEB;
-}
-
 .map {
   margin-bottom: 2rem;
 }
@@ -144,6 +140,10 @@ h3 {
 #usmap {
   width: 124%;
   margin-left: -12%;
+}
+
+#scattercanvas text {
+  font-size: 20px;
 }
 
 /*styles to make the svg responsive*/

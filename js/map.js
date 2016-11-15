@@ -92,7 +92,6 @@ var buildMap = function (AttrID, state_data){
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
               $('.scatter').html('<div id="scattercanvas"></div>');
               $('#stateinfo').html(enterState);
-              $('.map-div').addClass('border-right');
               createVis("scatter", stateClass);
               document.getElementById('schoolinfo').innerHTML = "";
             });
