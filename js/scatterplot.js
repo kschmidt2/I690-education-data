@@ -136,6 +136,7 @@ var buildScatter = function(selectState, school_data) {
         .on("mouseover", scatterHover)
         .on("click", scatterHover);
 
+<<<<<<< HEAD
 
       console.log("I have reached this part");
 
@@ -302,6 +303,23 @@ var buildScatter = function(selectState, school_data) {
             .on("mouseover", scatterHover)
             .on("click", scatterHover);
 
+            displayDataFromSelectedDataPoint(filtered_data, selectedSchool);
           }
 
       }
+
+      }
+
+
+      function displayDataFromSelectedDataPoint(filtered_data, selectedSchool){
+            var currentDataPoint;
+            for (var i = 0; i < filtered_data.length; i ++){
+
+              if (filtered_data[i].college === selectedSchool){
+                currentDataPoint = filtered_data[i];
+              }
+            }
+
+            scatterHover(currentDataPoint);
+      }
+>>>>>>> 4e1a6e2abb0cd1703a9d32aaef3ea9b7c8ce5eae

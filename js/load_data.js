@@ -87,7 +87,7 @@ function combine_data(error, raw_school_data, raw_state_data) {
             year: d.FiscalYear,
             inflation: 1/(+d.InflationDenom),
             cost_of_living: +d.CostOfLiving,
-            state_funding: +d.SupportPerStudent,
+            state_funding: +d.StateSupport,
             ft_students: +d.FTEnrollment
         });
     });
@@ -177,14 +177,13 @@ function combine_data(error, raw_school_data, raw_state_data) {
 
 function createVis (mode) {
     if (!(mode in vis_function_list)) {
-        console.log("Incorrect mode specified. Try again?");
-        throw error;
+        throw new Error("We don't know how to visualize a "+ mode +". Try a different vis mode?");
+    } else {
+        console.log("Drawing in "+ mode +" mode");
     }
 
     this.vis_mode = mode;
     this.vis_function_args = Array.prototype.slice.call(arguments, 1);
-
-    console.log("Drawing in "+ mode +" mode");
 
     // load data
     var institutionFile = "data/institutional-data.csv";
