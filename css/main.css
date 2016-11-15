@@ -38,7 +38,6 @@ body {
 
 .right-row {
   padding-left: 15px;
-  display:none;
   /*min-height: 100vh;*/
 }
 
@@ -150,8 +149,26 @@ h3 {
   font-size: 20px;
 }
 
+select {
+  /*-webkit-appearance: none;*/
+  -webkit-border-radius: 0px;
+  border-radius: 0;
+}
+
 .selectpicker {
   display: none;
+  width: 300px;
+  border: 1px solid #47b4f2;
+  color: #47b4f2;
+  border-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 0;
+  outline: 1px solid #47b4f2;
+  outline-offset: -1px;
+}
+
+.selectpicker:hover {
+  background-color: #ECEDEB;
 }
 
 /*styles to make the svg responsive*/

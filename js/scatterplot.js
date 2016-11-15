@@ -33,7 +33,7 @@ var buildScatter = function(selectState, school_data) {
   // create responsive svg
   var svg = d3v4.select("#scattercanvas")
       .append("div")
-      .classed("svg-container-line " + selectState + "-svg", true) //container class to make it responsive
+      .classed("svg-container-line-svg", true) //container class to make it responsive
       .append("svg")
       //responsive SVG needs these 2 attributes and no width and height attr
       .attr("preserveAspectRatio", "xMinYMin meet")
@@ -69,16 +69,16 @@ var buildScatter = function(selectState, school_data) {
       filtered_data_global = filtered_data;
       //Creates the dropdown with only the schools in the selected state
 
-      //Retrieves the schools in the state. 
+      //Retrieves the schools in the state.
       var schools = populateSchoolsFromFilteredData(filtered_data);
-      
+
       //Helps to fill in all of the schools in the current selection
       populateSelector(schools);
 
       addChangeEvent();
       console.log("we have updated the selector");
 
-  
+
 
       svg.append("g")
           .attr("class", "axis")
@@ -150,7 +150,7 @@ var buildScatter = function(selectState, school_data) {
       //     svg.selectAll(".dot")
       //       .data(filtered_data)
       //     .enter().append("circle")
-      //       .attr("class", "dot") 
+      //       .attr("class", "dot")
       //       .attr("r", 10)
       //       .attr("cx", function(d) { return x(d.median_earnings); })
       //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
@@ -158,7 +158,7 @@ var buildScatter = function(selectState, school_data) {
       //       .on("mouseover", scatterHover)
       //       .on("click", scatterHover);
       //   }
-      //   else{ 
+      //   else{
       //     var circles = svg.selectAll(".dot");
       //     console.log(circles);
       //     //Shows the required circle in orange
@@ -177,7 +177,7 @@ var buildScatter = function(selectState, school_data) {
       //       .on("click", scatterHover);
 
       //     }
-        
+
       // }
 
   };
@@ -243,12 +243,12 @@ var buildScatter = function(selectState, school_data) {
     var selector = document.getElementById('school-selector');
     console.log(selector);
     var newOptions = "<select class='selectpicker' id = 'school-selector'>";
-    newOptions += "<option>" + "Show all" + "</option>";
-    
+    newOptions += "<option>Show all</option>";
+
     for (var i = 0; i < schools.length; i++) {
       newOptions += "<option>" + schools[i] + "</option>";
     }
-    
+
     newOptions += "</select>";
     document.getElementById('school-selector').innerHTML = newOptions;
 
@@ -276,7 +276,7 @@ var buildScatter = function(selectState, school_data) {
           svg.selectAll(".dot")
             .data(filtered_data)
           .enter().append("circle")
-            .attr("class", "dot") 
+            .attr("class", "dot")
             .attr("r", 10)
             .attr("cx", function(d) { return x(d.median_earnings); })
             .attr("cy", function(d) { return y(d.mean_debt_graduated); })
@@ -284,7 +284,7 @@ var buildScatter = function(selectState, school_data) {
             .on("mouseover", scatterHover)
             .on("click", scatterHover);
         }
-        else{ 
+        else{
           var circles = svg.selectAll(".dot");
           console.log(circles);
           //Shows the required circle in orange
@@ -303,5 +303,5 @@ var buildScatter = function(selectState, school_data) {
             .on("click", scatterHover);
 
           }
-        
+
       }

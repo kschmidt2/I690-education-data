@@ -95,7 +95,6 @@ var buildMap = function (AttrID, state_data){
               createVis("scatter", stateClass);
               document.getElementById('schoolinfo').innerHTML = "";
               $('.selectpicker').fadeIn('fast');
-              $('.right-row').fadeIn('fast');
             });
         }
         }
