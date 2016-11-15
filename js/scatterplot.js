@@ -3,15 +3,46 @@
 // add them to the beginning of the list.
 // Call with createVis("bars", <selection variables>);
 var buildBarCharts = function(state_data, national_data) {
-    console.log(state_data);
-    console.log(national_data);
+    //console.log(state_data);
+    //console.log(national_data);
 };
 
 // Build scatterplot for a state based on school data
 // Call with createVis("scatter", selectedState);
 var buildScatter = function(selectState, school_data) {
 
+  //Dropdown
   console.log(selectState);
+  
+  var allSchoolsInState;
+  d3v4.extent(school_data,
+        function(d) { allSchoolsInState = d.college; 
+                      return d.college; });
+  //console.log(school_data.length);
+  //console.log(school_data);
+  //Retrieves the schools in the state. Helps to populate the selector
+  var schools = [];
+  var j = 0;
+  for (var i = 0; i < school_data.length; i++){
+    if (school_data[i].state == "MA"){
+      schools[j] = school_data[i].college;
+      j++;
+    }else{
+      console.log("It didnt match");
+    }
+  }
+  //console.log(schools);
+  //console.log(school_data.length);
+  //console.log(allSchoolsInState);
+
+  var selector = document.getElementById('school-selector');
+  console.log(selector);
+  var newOptions = "<select class='selectpicker' id = 'school-selector'>";
+  for (var i = 0; i < schools.length; i++) {
+    newOptions += "<option>" + schools[i] + "</option>";
+  }
+  newOptions += "</select>";
+  document.getElementById('school-selector').innerHTML = newOptions;
 
   // margins
   var margin = {top: 25, right: 0, bottom: 55, left: 80},
@@ -52,7 +83,7 @@ var buildScatter = function(selectState, school_data) {
         }
     });
 
-    console.log(filtered_data);
+    //console.log(filtered_data);
 
       svg.append("g")
           .attr("class", "axis")
@@ -122,6 +153,8 @@ var buildScatter = function(selectState, school_data) {
         .on("click", scatterHover);
 
   };
+
+
 
 
   // function stateClick () {

@@ -1,3 +1,4 @@
+ /*This function creates the line chart that helps us to compare the amount of state funding per student in the selected state*/
  function buildLineChart(selectState){
 
         //Defines the size of the various attributes in the visualization canvas
