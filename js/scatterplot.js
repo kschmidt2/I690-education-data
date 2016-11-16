@@ -43,6 +43,14 @@ var buildScatter = function(selectState, school_data) {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+      svg.append("clipPath")
+          .attr("id", "clip")
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", width)
+          .attr("height", height);
+
       svg_global = svg;
 
     var x = d3v4.scaleLinear()
@@ -140,6 +148,7 @@ var buildScatter = function(selectState, school_data) {
       console.log("I have reached this part");
 
       selectSchool("Maine Maritime Academy");
+      updateRegression(filtered_data);
 
 
 
@@ -255,7 +264,7 @@ var buildScatter = function(selectState, school_data) {
   }
   //Adds the event listener to monitor any changes in the selection
   function addChangeEvent(){
-    var selectEvent = document.getElementById('school-selector')
+    var selectEvent = document.getElementById('school-selector');
     //The line below adds the event to the map! I do not understand why this is happening?
     //selectEvent.addEventListener("change", alert(this.value));
     console.log("I tried to add the event");
@@ -305,3 +314,26 @@ var buildScatter = function(selectState, school_data) {
           }
 
       }
+
+// Add a regression line
+function updateRegression(schools) {
+    var linear_model = ss.linearRegression(schools.map(function(d) {
+        return [d.median_earnings, d.mean_debt_graduated];
+    }));
+
+    var regression_function = ss.linearRegressionLine(linear_model);
+    var reg_line = svg_global.selectAll(".regression").data([schools]);
+    reg_line.exit().remove();
+
+    reg_line.enter().append("line")
+        .attr("class", "regression")
+        .attr("x1", x_global(0))
+        .attr("y1", y_global(regression_function(0)))
+        .attr("x2", x_global(85000))
+        .attr("y2", y_global(regression_function(85000)))
+        .attr("clip-path", "url(#clip)")
+        .style("stroke", "mediumvioletred")
+        .style("opacity", 0)
+        .transition().delay(250)
+            .style("opacity", 1);
+}
