@@ -90,10 +90,12 @@ var buildMap = function (selected_attr, state_data) {
               createVis("scatter", stateClass);
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
+              $('.school-list').hide();
             });
           }
           }
         );
+
 
         $(window).on('resize', function() {
            map.resize();

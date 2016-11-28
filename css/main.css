@@ -70,6 +70,10 @@ button.active {
   border: 1px solid #1f3f48;
 }
 
+button:focus {
+  outline: 0;
+}
+
 .map {
   margin-bottom: 2rem;
 }
@@ -161,6 +165,9 @@ select {
 
 .selectpicker {
   display: none;
+}
+
+.school-list {
   width: 280px;
   border: 1px solid #47b4f2;
   color: #47b4f2;
@@ -171,7 +178,7 @@ select {
   outline-offset: -1px;
 }
 
-.selectpicker:hover {
+.school-list:hover {
   background-color: #ECEDEB;
 }
 
@@ -190,5 +197,7 @@ select {
   vertical-align: top;
   overflow: hidden;
 }
+
+
 
 /*media queries*/
