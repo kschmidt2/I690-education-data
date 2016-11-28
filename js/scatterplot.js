@@ -183,7 +183,11 @@ var buildScatter = function(selectState, school_data) {
             {return "#1f3f48";}
             else { return "#47b4f2"}
         });
-    d3.select('#schoolinfo').text(key);
+        if (key !== "show-all") {
+          d3.select('#schoolinfo').text(key);
+        } else {
+          d3.select('#schoolinfo').text("")
+        }
     }
 
   function details (d) {
