@@ -4,19 +4,14 @@
 // Call with createVis("bars", <selection variables>);
 
 /*Global varaibles*/
-//var state_data;
+// var state_data;
+// var national_data;
 var filtered_data_global;
 var svg_global;
 var school_data_global;
 var x_global;
 var y_global;
 
-
-var buildBarCharts = function(state_data, national_data) {
-    //console.log(state_data);
-    //console.log(national_data);
-
-};
 
 // Build scatterplot for a state based on school data
 // Call with createVis("scatter", selectedState);
@@ -84,9 +79,7 @@ var buildScatter = function(selectState, school_data) {
       populateSelector(schools);
 
       addChangeEvent();
-      console.log("we have updated the selector");
-
-
+      // console.log("we have updated the selector");
 
       svg.append("g")
           .attr("class", "axis")
@@ -145,9 +138,9 @@ var buildScatter = function(selectState, school_data) {
         .on("click", scatterHover);
 
 
-      console.log("I have reached this part");
+      // console.log("I have reached this part");
 
-      selectSchool("Maine Maritime Academy");
+      // selectSchool("Maine Maritime Academy");
       updateRegression(filtered_data);
 
 
@@ -205,11 +198,18 @@ var buildScatter = function(selectState, school_data) {
   //     document.getElementById('schoolinfo').innerHTML = "";
   // }
 
+  function buildBarCharts (d, state_data, national_data) {
+    console.log(d.median_earnings);
+    console.log(state_data);
+    console.log(national_data);
+  };
+
   /*Helper functions*/
   function scatterHover(d) {
     details(d);
     $('.dot').removeClass('hover-dot');
     $(this).addClass('hover-dot');
+    // buildBarCharts(d, state_data, national_data);
   }
 
   function details (d) {
@@ -220,7 +220,7 @@ var buildScatter = function(selectState, school_data) {
     details += (d.completion_rate*100).toFixed(2) + "%</br><span class='category'>Repayment rate:</span> ";
     details += (d.repayment_rate*100).toFixed(2) + "%";
     document.getElementById('schoolinfo').innerHTML = details;
-    }
+  }
 
 
     function populateSchoolsFromFilteredData(filtered_data){
@@ -250,7 +250,7 @@ var buildScatter = function(selectState, school_data) {
   //Helps to populate the selector
   function populateSelector(schools){
     var selector = document.getElementById('school-selector');
-    console.log(selector);
+    // console.log(selector);
     var newOptions = "<select class='selectpicker' id = 'school-selector'>";
     newOptions += "<option>" + "Show all" + "</option>";
 
@@ -261,13 +261,16 @@ var buildScatter = function(selectState, school_data) {
     newOptions += "</select>";
     document.getElementById('school-selector').innerHTML = newOptions;
 
+    $('option').on('click', function(){console.log('hello!')});
+
   }
+
   //Adds the event listener to monitor any changes in the selection
   function addChangeEvent(){
     var selectEvent = document.getElementById('school-selector');
     //The line below adds the event to the map! I do not understand why this is happening?
     //selectEvent.addEventListener("change", alert(this.value));
-    console.log("I tried to add the event");
+    // console.log("I tried to add the event");
   }
 
       function selectSchool(selectedSchool){
@@ -281,6 +284,15 @@ var buildScatter = function(selectState, school_data) {
         var y = y_global;
 
         console.log(selectedSchool);
+
+        function showInfo(d) {
+          if (selectedSchool === d.college) {
+            scatterHover();
+          }
+        }
+
+        showInfo();
+
         if (selectedSchool === "Show all"){
           svg.selectAll(".dot")
             .data(filtered_data)
@@ -295,24 +307,22 @@ var buildScatter = function(selectState, school_data) {
         }
         else{
           var circles = svg.selectAll(".dot");
-          console.log(circles);
           //Shows the required circle in orange
           circles.remove();
 
           svg.selectAll(".dot")
-          .data(filtered_data)
-          .enter().append("circle")
-            .attr("class", "dot")
-            .attr("r", 10)
-            .attr("cx", function(d) { return x(d.median_earnings); })
-            .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-            .attr("stroke", "#fff")
-            .style("fill", function(d) { if(d.college === selectedSchool) return "orange"; })
-            .on("mouseover", scatterHover)
-            .on("click", scatterHover);
+              .data(filtered_data)
+            .enter().append("circle")
+              .attr("class", "dot")
+              .attr("r", 10)
+              .attr("cx", function(d) { return x(d.median_earnings); })
+              .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+              .attr("stroke", "#fff")
+              .style("fill", function(d) { if(d.college === selectedSchool) return "#1f3f48"; })
+              .on("mouseover", scatterHover)
+              .on("click", scatterHover);
 
-          }
-
+        }
       }
 
 // Add a regression line
@@ -332,8 +342,10 @@ function updateRegression(schools) {
         .attr("x2", x_global(85000))
         .attr("y2", y_global(regression_function(85000)))
         .attr("clip-path", "url(#clip)")
-        .style("stroke", "mediumvioletred")
+        .style("stroke", "#1f3f48")
         .style("opacity", 0)
-        .transition().delay(250)
+        .style("stroke-dasharray", "10,8")
+        .style("stroke-width", "2px")
+        .transition()
             .style("opacity", 1);
 }
