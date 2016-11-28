@@ -73,7 +73,7 @@ var buildScatter = function(selectState, school_data) {
       //Creates the dropdown with only the schools in the selected state
 
       //Retrieves the schools in the state.
-      var schools = populateSchoolsFromFilteredData(filtered_data);
+      // var schools = populateSchoolsFromFilteredData(filtered_data);
 
       //Helps to fill in all of the schools in the current selection
       // populateSelector(schools);
@@ -115,7 +115,7 @@ var buildScatter = function(selectState, school_data) {
 
 
       // creates dropdown menu for each state
-      var dropDown = d3.select("#school-selector").append("select")
+      var dropDown = d3.select("#school-selector").append("select").data(filtered_data)
                         .attr("class", "school-list");
 
       var options = dropDown.selectAll("option")
@@ -136,6 +136,7 @@ var buildScatter = function(selectState, school_data) {
       svg.selectAll(".dot")
         .data(filtered_data)
       .enter().append("circle")
+        .attr("id", function(d) { return d.college })
         .attr("class", "dot")
         .attr("r", 10)
         .attr("cx", function(d) { return x(d.median_earnings); })
@@ -150,44 +151,6 @@ var buildScatter = function(selectState, school_data) {
       // selectSchool("Maine Maritime Academy");
       updateRegression(filtered_data);
 
-
-      //I would not want this function to be here...
-      // function selectSchool(selectedSchool){
-      //   console.log(selectedSchool);
-      //   if (selectedSchool === "Show all"){
-      //     svg.selectAll(".dot")
-      //       .data(filtered_data)
-      //     .enter().append("circle")
-      //       .attr("class", "dot")
-      //       .attr("r", 10)
-      //       .attr("cx", function(d) { return x(d.median_earnings); })
-      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-      //       .attr("stroke", "#fff")
-      //       .on("mouseover", scatterHover)
-      //       .on("click", scatterHover);
-      //   }
-      //   else{
-      //     var circles = svg.selectAll(".dot");
-      //     console.log(circles);
-      //     //Shows the required circle in orange
-      //     circles.remove();
-
-      //     svg.selectAll(".dot")
-      //     .data(filtered_data)
-      //     .enter().append("circle")
-      //       .attr("class", "dot")
-      //       .attr("r", 10)
-      //       .attr("cx", function(d) { return x(d.median_earnings); })
-      //       .attr("cy", function(d) { return y(d.mean_debt_graduated); })
-      //       .attr("stroke", "#fff")
-      //       .style("fill", function(d) { if(d.college === selectedSchool) return "orange"; })
-      //       .on("mouseover", scatterHover)
-      //       .on("click", scatterHover);
-
-      //     }
-
-      // }
-
   };
 
 
@@ -199,17 +162,29 @@ var buildScatter = function(selectState, school_data) {
 
   /*Helper functions*/
   function scatterHover(d) {
+    console.log(d);
     details(d);
-    $('.dot').removeClass('hover-dot');
-    $(this).addClass('hover-dot');
+    $('.dot').css('fill', '#47b4f2').attr("r", 10);
+    $(this).css('fill', "#1f3f48").attr("r", 15);
     // buildBarCharts(d, state_data, national_data);
   }
 
   function dropClick(d) {
-    details(d);
-    $('.dot').removeClass('hover-dot');
-    $(this).addClass('hover-dot');
-  }
+    key = this.value;
+    console.log(key);
+    d3.selectAll('.dot')
+    .attr('r', function(d, i) {
+            if (d.college == key)
+            {return 15;}
+            else { return 10}
+        })
+    .style('fill', function(d, i) {
+            if (d.college == key)
+            {return "#1f3f48";}
+            else { return "#47b4f2"}
+        });
+    d3.select('#schoolinfo').text(key);
+    }
 
   function details (d) {
     var details = "<h3>" + d.college + "</h3><span class='category'>Median earnings:</span> $";
@@ -222,30 +197,30 @@ var buildScatter = function(selectState, school_data) {
   }
 
 
-    function populateSchoolsFromFilteredData(filtered_data){
-    var schools = [];
-    var j = 0;
-    for (var i = 0; i < filtered_data.length; i++){
-        schools[j] = filtered_data[i].college;
-        j++;
-     }
-      return schools;
-    }
-
-
-    function populateSchools(currentState, school_data){
-    var schools = [];
-    var j = 0;
-    for (var i = 0; i < school_data.length; i++){
-      if (school_data[i].state == currentState){
-        schools[j] = school_data[i].college;
-        j++;
-      }else{
-        console.log("It didnt match");
-      }
-     }
-      return schools;
-    }
+    // function populateSchoolsFromFilteredData(filtered_data){
+    // var schools = [];
+    // var j = 0;
+    // for (var i = 0; i < filtered_data.length; i++){
+    //     schools[j] = filtered_data[i].college;
+    //     j++;
+    //  }
+    //   return schools;
+    // }
+    //
+    //
+    // function populateSchools(currentState, school_data){
+    // var schools = [];
+    // var j = 0;
+    // for (var i = 0; i < school_data.length; i++){
+    //   if (school_data[i].state == currentState){
+    //     schools[j] = school_data[i].college;
+    //     j++;
+    //   }else{
+    //     console.log("It didnt match");
+    //   }
+    //  }
+    //   return schools;
+    // }
   //Helps to populate the selector
   // function populateSelector(schools){
   //   var selector = document.getElementById('school-selector');
