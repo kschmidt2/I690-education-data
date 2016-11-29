@@ -92,7 +92,7 @@ var buildScatter = function(selectState, school_data) {
         .attr("cy", function(d) { return y(d.mean_debt_graduated); })
         .attr("stroke", "#fff")
         .on("mouseover", scatterHover)
-        .on("click", scatterHover);
+        .on("click", buildBarCharts);
 
     // creates dropdown menu for each state
     var dropDown = d3.select("#school-selector").append("select")
@@ -113,6 +113,7 @@ var buildScatter = function(selectState, school_data) {
     $('.school-list').val("show-all");
 
     updateRegression(this.filtered_data);
+
 };
 
 // Build bar charts comparing school, state, and national averages
@@ -140,7 +141,7 @@ function dropClick(d) {
     // gets value of the selected option
     var selectedValue = d3.event.target.value;
 
-    this.filtered_data.forEach(function (d) {
+    filtered_data.forEach(function (d) {
         // loop through json data to match td entry
         // removes info box if show all is selected
         if (selectedValue == "show-all") {

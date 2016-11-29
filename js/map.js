@@ -90,6 +90,9 @@ var buildMap = function (selected_attr, state_data) {
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
               $('.school-list').hide();
+              $('#vis_container').html('');
+              $('#schoolAndStateInfo').html('');
+              createVis("line", stateClass);
             }).on('mouseover', function(){
               $this = this;
               $(this).removeClass('datamaps-subunit');

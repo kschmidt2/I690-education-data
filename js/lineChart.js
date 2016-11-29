@@ -104,7 +104,7 @@ function buildLineChart(selectState, state_data) {
 function populateDetails(d){
 
     var stateDetails = "<h3>" + d.state + "</h3>";
-      stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
+      stateDetails += "<span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
       stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
       document.getElementById("schoolAndStateInfo").innerHTML = stateDetails;
       //$('#schoolAndStateInfo').html(stateDetails);
