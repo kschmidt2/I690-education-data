@@ -1,6 +1,6 @@
 /*This function creates the line chart that helps us to compare the amount of state funding per student in the selected state*/
 function buildLineChart(selectState, state_data) {
-    
+
     //Defines the size of the various attributes in the visualization canvas
     var height = 500;
     var width = 500;
@@ -8,8 +8,8 @@ function buildLineChart(selectState, state_data) {
     var margin_left = 40;
 
 
-    // create responsive svg
-  var svg = d3v4.select("#vis_container")
+    //Creates a responsive svg
+    var svg = d3v4.select("#vis_container")
       .classed("svg-container-line " + selectState + "-svg", true) //container class to make it responsive
       .append("svg")
       //responsive SVG needs these 2 attributes and no width and height attr
@@ -33,7 +33,7 @@ function buildLineChart(selectState, state_data) {
         .domain([20000 , 2000])
         .range([margin, height - margin]);
 
-    // Add x axis to graph
+    // Add an x axis to graph
     svg.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(0,"+(500 - margin)+")")
@@ -47,14 +47,13 @@ function buildLineChart(selectState, state_data) {
         .attr("id", "axis-text")
         .text("YEAR");
 
-    // Add y axis to graph
+    // Add a y axis to graph
     svg.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(" + margin_left + ",0)")
         .call(d3v4.axisLeft(y)
             .tickFormat(function(d) { return "$" + d.toLocaleString(); }));
 
-    //Make changes here to change the way Average funding is written on the chart
     svg.append("text")
         .attr("transform", "rotate(90)")
         .attr("class", "axis-label")
@@ -65,27 +64,31 @@ function buildLineChart(selectState, state_data) {
         .text("AVERAGE FUNDING");
 
 
-    // Add data
-    //This was the only way I could reference the data!???
-    var lineFunc = d3v4.line()
-        .x(function (d) { return x(d.year); })
-        .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
 
+
+    //Draws the line chart
     svg.append("svg:path")
             .attr("d", lineFunc(state_data[selectState]))//this line is causing errors???
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
 
+    var lineFunc = d3v4.line()
+        .x(function (d) { return x(d.year); })
+        .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
+
 }
+
+
+/*Helper functions*/
 
 //Populates the information that follows the line chart
 function populateDetails(d){
 
     var stateDetails = "<h3>" + d.state + "</h3>";
-      stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
-      stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
-      document.getElementById("schoolAndStateInfo").innerHTML = stateDetails;
+    stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
+    stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
+    document.getElementById("schoolAndStateInfo").innerHTML = stateDetails;
 
 }
 
