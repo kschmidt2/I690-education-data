@@ -6,11 +6,24 @@ function buildLineChart(selectState, state_data) {
     var margin = 40;
     var margin_left = 40;
 
-    // Create the SVG canvas that will be used to render the visualization.
-    var svg = d3v4.select("#vis_container")
-        .append("svg")
+
+    // create responsive svg
+  var svg = d3v4.select("#vis_container")
+      .classed("svg-container-line " + selectState + "-svg", true) //container class to make it responsive
+      .append("svg")
+      //responsive SVG needs these 2 attributes and no width and height attr
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", "0 0 800 750")
+      //class to make it responsive
+      .classed("svg-content-responsive", true)
         .attr("width", width)
         .attr("height", height);
+
+    // Create the SVG canvas that will be used to render the visualization.
+    // var svg = d3v4.select("#vis_container")
+    //     .append("svg")
+    //     .attr("width", width)
+    //     .attr("height", height);
 
     // Define the axis scales and formats
     var x = d3v4.scaleLinear()
@@ -22,7 +35,7 @@ function buildLineChart(selectState, state_data) {
         //this formats the ticks on the axis and removes the , from the thousands
 
     var y = d3v4.scaleLinear()
-        .domain([15000 , 5000])
+        .domain([20000 , 2000])
         .range([margin, height - margin]);
 
     // Add x axis to graph
@@ -33,10 +46,13 @@ function buildLineChart(selectState, state_data) {
 
     svg.append("text")
         .attr("class", "axis-label")
-        .attr("y", 450)
-        .attr("x",0 + (440))
+        .attr("y", 455)
+        .attr("x", 0 + (440))
         .style("text-anchor", "middle")
-        .text("Year");
+        .attr("id", "axis-text")
+        .text("YEAR");
+
+
 
     // Add y axis to graph
     svg.append("g")
@@ -48,10 +64,11 @@ function buildLineChart(selectState, state_data) {
     svg.append("text")
         .attr("transform", "rotate(90)")
         .attr("class", "axis-label")
-        .attr("y", - 50)
-        .attr("x", 0 + (80))
+        .attr("y", - 45)
+        .attr("x", 0 + (100))
         .style("text-anchor", "middle")
-        .text("Average funding");
+        .attr("id", "axis-text")
+        .text("AVERAGE FUNDING");
 
 
     // Now a clipping plain for the main axes
@@ -67,14 +84,35 @@ function buildLineChart(selectState, state_data) {
 
 
     // Add data
+    //This was the only way I could reference the data!???
     var lineFunc = d3v4.line()
         .x(function (d) { return x(d.year); })
-        .y(function (d) { return y(d.state_funding / d.ft_students); });
+        .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
 
-    // console.log(state_data[selectState]);
     svg.append("svg:path")
-            .attr("d", lineFunc(state_data[selectState]))
+            .attr("d", lineFunc(state_data[selectState]))//this line is causing errors???
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
+    
 }
+
+
+//Populates the information that follows the line chart
+//How do we get d???
+function populateDetails(d){
+    
+    var stateDetails = "<h3>" + d.state + "</h3>";
+      stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
+      stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
+      document.getElementById("schoolAndStateInfo").innerHTML = stateDetails;
+      //$('#schoolAndStateInfo').html(stateDetails);
+
+}
+
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
