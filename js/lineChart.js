@@ -89,9 +89,8 @@ function buildLineChart(selectState, state_data) {
         .x(function (d) { return x(d.year); })
         .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
 
-    // console.log(state_data[selectState]);
     svg.append("svg:path")
-            .attr("d", lineFunc(state_data[selectState]))
+            .attr("d", lineFunc(state_data[selectState]))//this line is causing errors???
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
@@ -103,7 +102,6 @@ function buildLineChart(selectState, state_data) {
 //How do we get d???
 function populateDetails(d){
     
-    console.log(d);
     var stateDetails = "<h3>" + d.state + "</h3>";
       stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
       stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
