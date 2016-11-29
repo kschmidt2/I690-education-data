@@ -65,15 +65,15 @@ function buildLineChart(selectState, state_data) {
 
 
     //Draws the line chart
+    var lineFunc = d3v4.line()
+        .x(function (d) { return x(d.year); })
+        .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
+        
     svg.append("svg:path")
             .attr("d", lineFunc(state_data[selectState]))
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
-
-    var lineFunc = d3v4.line()
-        .x(function (d) { return x(d.year); })
-        .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
 
 }
 
