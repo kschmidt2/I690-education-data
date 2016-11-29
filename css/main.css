@@ -197,7 +197,13 @@ select {
   vertical-align: top;
   overflow: hidden;
 }
-
-
+.axis-text{
+  font-size: 4em;
+  color:pink;
+}
+#axis-text{
+  font-size: 4em;
+  color:pink;
+}
 
 /*media queries*/
