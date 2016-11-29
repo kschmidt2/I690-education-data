@@ -16,8 +16,8 @@ function buildLineChart(selectState, state_data) {
       .attr("viewBox", "0 0 800 750")
       //class to make it responsive
       .classed("svg-content-responsive", true)
-        .attr("width", width)
-        .attr("height", height);
+      .attr("width", width)
+      .attr("height", height);
 
     // Create the SVG canvas that will be used to render the visualization.
     // var svg = d3v4.select("#vis_container")
@@ -27,7 +27,7 @@ function buildLineChart(selectState, state_data) {
 
     // Define the axis scales and formats
     var x = d3v4.scaleLinear()
-        .domain([1998, 2016])
+        .domain([2000, 2016])
         .range([margin, width - margin]);
 
     var xAxis = d3v4.axisBottom(x)
@@ -58,7 +58,8 @@ function buildLineChart(selectState, state_data) {
     svg.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(" + margin_left + ",0)")
-        .call(d3v4.axisLeft(y));
+        .call(d3v4.axisLeft(y)
+            .tickFormat(function(d) { return "$" + d.toLocaleString(); }));
 
     //Make changes here to change the way Average funding is written on the chart
     svg.append("text")
@@ -94,14 +95,14 @@ function buildLineChart(selectState, state_data) {
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
-    
+
 }
 
 
 //Populates the information that follows the line chart
 //How do we get d???
 function populateDetails(d){
-    
+
     var stateDetails = "<h3>" + d.state + "</h3>";
       stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
       stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
@@ -115,4 +116,3 @@ function numberWithCommas(x) {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 }
-
