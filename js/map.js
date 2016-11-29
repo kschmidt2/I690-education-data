@@ -9,7 +9,7 @@ var buildMap = function (selected_attr, state_data) {
     }
 
     // Define color scale
-    var colors = {funding_per_student: ["#d2d9da","#1f3f48"], mean_debt: ["#daf0fc", "#47b4f2"], median_earnings: ["#eff3d3", "#AFC436"] };
+    var colors = {funding_per_student: ["#e5f0f3","#1f3f48"], mean_debt: ["#ecf3f6", "#47b4f2"], median_earnings: ["#f6f7ef", "#AFC436"] };
 
     var paletteScaleFunding = d3.scale.linear()
         .domain(d3v4.extent(state_data,
