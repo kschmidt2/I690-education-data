@@ -81,32 +81,26 @@ var buildMap = function (selected_attr, state_data) {
             done: function(datamap) {
             datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography){
               $this = this;
-              $('.datamaps-subunit').removeClass('datamaps-subunit');
+              $(this).removeClass('datamaps-subunit');
               var stateClass = $(this).attr('class');
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
-              $('.scatter').html('<div id="scattercanvas"></div>').fadeIn('fast');
-              $('#scattercanvas').fadeIn(500);
+              $('#scattercanvas').html('').fadeIn('fast');
               $('#stateinfo').html(enterState);
               createVis("scatter", stateClass);
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
               $('.school-list').hide();
+            }).on('mouseover', function(){
+              $this = this;
+              $(this).removeClass('datamaps-subunit');
+              var stateClass = $(this).attr('class');
               $('#vis_container').html('');
               $('#schoolAndStateInfo').html('');
               createVis("line", stateClass);
-            });//the section below makes the line chart appear but it causes the scatter plot to disappear
-            // datamap.svg.selectAll('.datamaps-subunit').on('click',function(geography){
-            //   $this = this;
-            //   $('.datamaps-subunit').removeClass('datamaps-subunit');
-            //   document.getElementById('vis_container').innerHTML = "";
-            //   document.getElementById('schoolAndStateInfo').innerHTML = "";
-            //   var stateClass = $(this).attr('class');
-            //   createVis("line", stateClass);
-            //   });
+            });
           }
           }
         );
-
 
         $(window).on('resize', function() {
            map.resize();
@@ -128,8 +122,6 @@ var buildMap = function (selected_attr, state_data) {
 $(".attr").on('click', function(){
   $this = this;
   var dataType = $(this).attr('id');
-  // $('.map').html('<div id="usmap"></div>');
-  // createVis("map", dataType);
   $(".attr").removeClass('active');
   $(this).addClass('active');
 });
