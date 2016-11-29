@@ -91,15 +91,18 @@ var buildMap = function (selected_attr, state_data) {
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
               $('.school-list').hide();
-            });//the section below makes the line chart appear but it causes the scatter plot to disappear
-            datamap.svg.selectAll('.datamaps-subunit').on('click',function(geography){
-              $this = this;
-              $('.datamaps-subunit').removeClass('datamaps-subunit');
-              document.getElementById('vis_container').innerHTML = "";
-              document.getElementById('schoolAndStateInfo').innerHTML = "";
-              var stateClass = $(this).attr('class');
+              $('#vis_container').html('');
+              $('#schoolAndStateInfo').html('');
               createVis("line", stateClass);
-              });
+            });//the section below makes the line chart appear but it causes the scatter plot to disappear
+            // datamap.svg.selectAll('.datamaps-subunit').on('click',function(geography){
+            //   $this = this;
+            //   $('.datamaps-subunit').removeClass('datamaps-subunit');
+            //   document.getElementById('vis_container').innerHTML = "";
+            //   document.getElementById('schoolAndStateInfo').innerHTML = "";
+            //   var stateClass = $(this).attr('class');
+            //   createVis("line", stateClass);
+            //   });
           }
           }
         );
