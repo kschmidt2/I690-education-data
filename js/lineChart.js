@@ -64,11 +64,9 @@ function buildLineChart(selectState, state_data) {
         .text("AVERAGE FUNDING");
 
 
-
-
     //Draws the line chart
     svg.append("svg:path")
-            .attr("d", lineFunc(state_data[selectState]))//this line is causing errors???
+            .attr("d", lineFunc(state_data[selectState]))
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
