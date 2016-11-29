@@ -22,7 +22,7 @@ function buildLineChart(selectState, state_data) {
         //this formats the ticks on the axis and removes the , from the thousands
 
     var y = d3v4.scaleLinear()
-        .domain([15000 , 5000])
+        .domain([20000 , 2000])
         .range([margin, height - margin]);
 
     // Add x axis to graph
@@ -67,9 +67,10 @@ function buildLineChart(selectState, state_data) {
 
 
     // Add data
+    //This was the only way I could reference the data!???
     var lineFunc = d3v4.line()
         .x(function (d) { return x(d.year); })
-        .y(function (d) { return y(d.state_funding / d.ft_students); });
+        .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
 
     // console.log(state_data[selectState]);
     svg.append("svg:path")
@@ -77,4 +78,29 @@ function buildLineChart(selectState, state_data) {
             .attr("stroke", "red")
             .attr("stroke-width",3)
             .attr("fill", "none");
+
+            
+   
+    
 }
+
+
+//Populates the information that follows the line chart
+//How do we get d???
+function populateDetails(d){
+    
+    console.log(d);
+    var stateDetails = "<h3>" + d.state + "</h3>";
+      stateDetails += "</br><span class='category'>Average debt:</span> $" + d.funding_per_student.toLocaleString();
+      stateDetails += "</br><span class='category'>Full Time Enrollment</span>: " + d.ft_students.toLocaleString();
+      document.getElementById("schoolAndStateInfo").innerHTML = stateDetails;
+      //$('#schoolAndStateInfo').html(stateDetails);
+
+}
+
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
