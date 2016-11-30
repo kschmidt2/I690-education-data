@@ -39,7 +39,6 @@ body {
 
 .buttons {
   text-align: center;
-  margin-top: 20px;
 }
 
 .buttons button {
@@ -75,8 +74,23 @@ button:focus {
   margin-bottom: 2rem;
 }
 
+.about-data {
+  padding: 1rem 2rem;
+  border-top: 2px solid #ECEDEB;
+  border-bottom: 2px solid #ECEDEB;
+  margin-bottom: 2rem;
+}
+
+#vis_container .domain {
+  stroke-width: .5px;
+}
+
+#vis_container .tick line {
+  stroke-width: .5px;
+}
+
 .about-data p {
-  font-size: .8rem;
+  font-size: 1rem;
 }
 
 footer {
@@ -187,7 +201,7 @@ select {
   top: 10px;
   left: 0;
 }
-.svg-container-line {
+.svg-container {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -195,15 +209,13 @@ select {
   vertical-align: top;
   overflow: hidden;
 }
-
-.axis-text{
-  font-size: 4em;
-  color:pink;
-}
-
-#axis-text{
-  font-size: 1em;
-  color:pink;
+.svg-container-line {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 45%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
 }
 
 /*media queries*/

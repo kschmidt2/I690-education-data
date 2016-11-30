@@ -10,7 +10,7 @@ var buildScatterplot = function(selectState) {
     // create responsive svg
     this.svg = d3v4.select("#scattercanvas")
         .append("div")
-            .classed("svg-container-line " + selectState + "-svg", true) //container class to make it responsive
+            .classed("svg-container", true) //container class to make it responsive
             .append("svg")
             //responsive SVG needs these 2 attributes and no width and height attr
             .attr("preserveAspectRatio", "xMinYMin meet")
@@ -18,8 +18,7 @@ var buildScatterplot = function(selectState) {
             //class to make it responsive
             .classed("svg-content-responsive", true)
             .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // create clipping path for regression line
     svg.append("clipPath")
