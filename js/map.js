@@ -8,7 +8,7 @@ function buildMap(selected_attr) {
     }
 
     // Define color scale
-    var colors = {funding_per_student: ["#d2d9da","#1f3f48"], mean_debt: ["#daf0fc", "#47b4f2"], median_earnings: ["#eff3d3", "#AFC436"] };
+    var colors = {median_earnings: ["#faeed9","#ffa500"], funding_per_student: ["#daf0fc", "#47b4f2"], mean_debt: ["#eff3d3", "#AFC436"] };
 
     var paletteScaleFunding = d3.scale.linear()
         .domain(d3v4.extent(map_data,
@@ -83,6 +83,7 @@ function buildMap(selected_attr) {
               $(this).removeClass('datamaps-subunit');
               var stateClass = $(this).attr('class');
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
+              $('.bottom-row').fadeIn('fast');
               $('#scattercanvas').html('').fadeIn('fast');
               $('#stateinfo').html(enterState);
               $('.school-list').hide();
@@ -90,7 +91,8 @@ function buildMap(selected_attr) {
               buildScatterplot(stateClass);
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
-              // $('.school-list').hide();
+              $('.school-list').hide();
+              $('.school-list'+stateClass).show();
               $('#vis_container').html('');
               $('#schoolAndStateInfo').html('');
               buildLineChart(stateClass);

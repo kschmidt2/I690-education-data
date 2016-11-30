@@ -31,18 +31,15 @@ body {
   font-size: 1.5rem;
 }
 
-.main-row {
-  padding-bottom: 4rem;
-  border-bottom: 8px solid #ECEDEB;
-}
-
-.right-row {
-  padding-left: 15px;
-  /*min-height: 100vh;*/
+.bottom-row {
+  display: none;
+  padding: 4rem 0;
+  border-top: 2px solid #ECEDEB;
 }
 
 .buttons {
   text-align: center;
+  margin-top: 20px;
 }
 
 .buttons button {
@@ -53,15 +50,15 @@ body {
 }
 
 button#state_funding {
-  background-color: #1F4E59;
-}
-
-button#mean_debt {
   background-color: #54B2E4;
 }
 
-button#median_earnings {
+button#mean_debt {
   background-color: #AFC436;
+}
+
+button#median_earnings {
+  background-color: #ffa500;
 }
 
 button.active {
@@ -85,6 +82,8 @@ button:focus {
 footer {
   font-size: 1rem;
   padding: 1rem 0;
+  border-top: 8px solid #ECEDEB;
+  margin: 0 -15px;
 }
 
 .img-responsive {
@@ -115,7 +114,6 @@ h3 {
 
 .category {
   font-weight: 700;
-  color: #47b4f2;
 }
 
 .label {
