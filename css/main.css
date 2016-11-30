@@ -230,5 +230,14 @@ select {
   vertical-align: top;
   overflow: hidden;
 }
+.svg-container-bars {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 45%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+  float: left;
+}
 
 /*media queries*/
