@@ -41,7 +41,7 @@ var buildScatterplot = function(selectState) {
         function(d) { return d.mean_debt_graduated; })).nice();
 
     // Filter to show selected state
-    this.filtered_data = school_data.filter(function(d) {
+    filtered_data = school_data.filter(function(d) {
         return selectState === d.state;
     });
 
@@ -108,7 +108,7 @@ var buildScatterplot = function(selectState) {
     $('option:first-child').val("show-all");
     $('.school-list').val("show-all");
 
-    updateRegression(this.filtered_data);
+    updateRegression(filtered_data);
 
 };
 
