@@ -58,25 +58,26 @@ function buildMap(selected_attr) {
         };
     });
 
+    function infoBox(selectState) {
+      map_data.forEach(function(d){
+        if (d.state_id == selectState) {
+          var stateDetails = "<h3>" + d.state + "</h3>";
+          stateDetails += "<span class='category'>State funding:</span> $" + d.funding_per_student.toLocaleString();
+          stateDetails += "</br><span class='category'>Median earnings</span>: $" + d.mean_debt.toLocaleString();
+          stateDetails += "</br><span class='category'>Median earnings</span>: $" + d.median_earnings.toLocaleString();
+          $("#state-info").html(stateDetails);
+        }
+      })
+    }
+
+
+
     // Create the map!
     var map = new Datamap({
         element: document.getElementById('usmap'),
         scope: 'usa',
         data: dataset,
         responsive: true,
-        geographyConfig: {
-            highlightBorderWidth: 0,
-            highlightFillColor:  '#ECEDEB',
-            popupTemplate: function(geo, data) {
-                // don't show tooltip if country not present in dataset
-                if (!data) { return ; }
-                // tooltip content
-                return ['<div class="hoverinfo">',
-                        '<strong>', geo.properties.name, '</strong>',
-                        '<br>Amount: <strong>$', Math.round(data.numberofThings).toLocaleString(), '</strong>',
-                        '</div>'].join('');
-            }
-        },
             done: function(datamap) {
             datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography){
               $this = this;
@@ -92,17 +93,22 @@ function buildMap(selected_attr) {
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
               $('.school-list').hide();
-              $('.school-list'+stateClass).show();
+              $('.school-list'+stateClass).first().show();
               $('#vis_container').html('');
-              $('#schoolAndStateInfo').html('');
+              $('#state-info').html('');
               buildLineChart(stateClass);
+              infoBox(stateClass);
             }).on('mouseover', function(){
               $this = this;
               $(this).removeClass('datamaps-subunit');
+              $(this).css('opacity', '0.2');
               var stateClass = $(this).attr('class');
               $('#vis_container').html('');
               $('#schoolAndStateInfo').html('');
               buildLineChart(stateClass);
+              infoBox(stateClass);
+            }).on('mouseleave', function(){
+              $('.datamaps-subunits').children().css('opacity', '1.0');
             });
           }
           }

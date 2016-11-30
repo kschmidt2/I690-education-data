@@ -86,6 +86,7 @@ var buildScatterplot = function(selectState) {
         .attr("cx", function(d) { return x(d.median_earnings); })
         .attr("cy", function(d) { return y(d.mean_debt_graduated); })
         .attr("stroke", "#fff")
+        .attr("fill", "#d2d9da")
         .on("mouseover", scatterHover);
         // .on("click", buildBarCharts);
 
@@ -123,7 +124,7 @@ var buildScatterplot = function(selectState) {
 /* Helper functions */
 function scatterHover(d) {
     details(d);
-    $('.dot').css('fill', '#47b4f2').attr("r", 10);
+    $('.dot').css('fill', '#d2d9da').attr("r", 10);
     $(this).css('fill', "#1f3f48").attr("r", 15);
     // buildBarCharts(d, state_data, national_data);
 }

@@ -89,6 +89,10 @@ button:focus {
   stroke-width: .5px;
 }
 
+#state-info {
+  margin-left: 2rem;
+}
+
 .about-data p {
   font-size: 1rem;
 }
@@ -102,10 +106,6 @@ footer {
 
 .img-responsive {
   max-with: 80%;
-}
-
-circle {
-  fill: #47b4f2;
 }
 
 .state:hover {
@@ -147,9 +147,6 @@ h3 {
 
 .hover-dot {
   fill: #1f3f48;
-}
-.selected-dot{
-  fill: #FFA500;
 }
 
 .datamaps-subunit:hover {
