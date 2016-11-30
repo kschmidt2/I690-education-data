@@ -31,6 +31,10 @@ body {
   font-size: 1.5rem;
 }
 
+.top-row {
+  padding-bottom: 2rem;
+}
+
 .bottom-row {
   display: none;
   padding: 4rem 0;
@@ -52,12 +56,24 @@ button#state_funding {
   background-color: #54B2E4;
 }
 
+.funding {
+  color: #54B2E4;
+}
+
 button#mean_debt {
   background-color: #AFC436;
 }
 
+.debt {
+  color: #AFC436;
+}
+
 button#median_earnings {
   background-color: #ffa500;
+}
+
+.earnings {
+  color: #ffa500;
 }
 
 button.active {

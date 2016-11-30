@@ -62,9 +62,9 @@ function buildMap(selected_attr) {
       map_data.forEach(function(d){
         if (d.state_id == selectState) {
           var stateDetails = "<h3>" + d.state + "</h3>";
-          stateDetails += "<span class='category'>State funding:</span> $" + d.funding_per_student.toLocaleString();
-          stateDetails += "</br><span class='category'>Median earnings</span>: $" + d.mean_debt.toLocaleString();
-          stateDetails += "</br><span class='category'>Median earnings</span>: $" + d.median_earnings.toLocaleString();
+          stateDetails += "<span class='category funding'>State funding per student (2015):</span> $" + d.funding_per_student.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+          stateDetails += "</br><span class='category debt'>Average debt per student (2014)</span>: $" + d.mean_debt.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+          stateDetails += "</br><span class='category earnings'>Median earnings per student (2012)</span>: $" + d.median_earnings.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
           $("#state-info").html(stateDetails);
         }
       })
