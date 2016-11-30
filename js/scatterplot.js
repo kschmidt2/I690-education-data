@@ -87,13 +87,13 @@ var buildScatterplot = function(selectState) {
         .attr("cx", function(d) { return x(d.median_earnings); })
         .attr("cy", function(d) { return y(d.mean_debt_graduated); })
         .attr("stroke", "#fff")
-        .on("mouseover", scatterHover)
-        .on("click", buildBarCharts);
+        .on("mouseover", scatterHover);
+        // .on("click", buildBarCharts);
 
     // creates dropdown menu for each state
     var dropDown = d3.select("#school-selector").append("select")
         .data(filtered_data)
-        .attr("class", "school-list");
+        .attr("class", function(d) { return "school-list school-list"+ d.state });
 
     var options = dropDown.selectAll("option").data(filtered_data)
         .enter().append("option")
@@ -114,11 +114,11 @@ var buildScatterplot = function(selectState) {
 
 // Build bar charts comparing school, state, and national averages
 // Uses global state_data and national_avgs arrays
-function buildBarCharts (d) {
-    console.log(d.median_earnings);
-    console.log(state_data);
-    console.log(national_avgs);
-}
+// function buildBarCharts (d) {
+//     console.log(d.median_earnings);
+//     console.log(state_data);
+//     console.log(national_avgs);
+// }
 
 
 /* Helper functions */

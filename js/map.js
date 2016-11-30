@@ -85,10 +85,12 @@ function buildMap(selected_attr) {
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
               $('#scattercanvas').html('').fadeIn('fast');
               $('#stateinfo').html(enterState);
+              $('.school-list').hide();
+              $('.school-list'+stateClass).show();
               buildScatterplot(stateClass);
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
-              $('.school-list').hide();
+              // $('.school-list').hide();
               $('#vis_container').html('');
               $('#schoolAndStateInfo').html('');
               buildLineChart(stateClass);
