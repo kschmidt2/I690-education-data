@@ -95,7 +95,6 @@ function buildMap(selected_attr) {
               $('.school-list').hide();
               $('.school-list'+stateClass).first().show();
               $('#vis_container').html('');
-              $('#state-info').html('');
               buildLineChart(stateClass);
               infoBox(stateClass);
             }).on('mouseover', function(){
@@ -104,11 +103,12 @@ function buildMap(selected_attr) {
               $(this).css('opacity', '0.2');
               var stateClass = $(this).attr('class');
               $('#vis_container').html('');
-              $('#schoolAndStateInfo').html('');
               buildLineChart(stateClass);
               infoBox(stateClass);
             }).on('mouseleave', function(){
               $('.datamaps-subunits').children().css('opacity', '1.0');
+              $('#vis_container').html('');
+              $('#state-info').html('');
             });
           }
           }
