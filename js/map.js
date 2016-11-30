@@ -1,7 +1,6 @@
-var buildMap = function (selected_attr, state_data) {
-    // Debugging statements: log arguments
-    // console.log(selected_attr);
-    console.log(state_data);
+function buildMap(selected_attr) {
+
+  var map_data = get_year_data("2015", this.state_data);
 
     // Normalize state funding by number of students
     if (selected_attr == "state_funding") {
@@ -12,23 +11,23 @@ var buildMap = function (selected_attr, state_data) {
     var colors = {funding_per_student: ["#d2d9da","#1f3f48"], mean_debt: ["#daf0fc", "#47b4f2"], median_earnings: ["#eff3d3", "#AFC436"] };
 
     var paletteScaleFunding = d3.scale.linear()
-        .domain(d3v4.extent(state_data,
+        .domain(d3v4.extent(map_data,
             function(d) { return d.funding_per_student; }))
         .range(colors.funding_per_student);
 
     var paletteScaleDebt = d3.scale.linear()
-        .domain(d3v4.extent(state_data,
+        .domain(d3v4.extent(map_data,
             function(d) { return d.mean_debt; }))
         .range(colors.mean_debt);
 
     var paletteScaleEarnings = d3.scale.linear()
-        .domain(d3v4.extent(state_data,
+        .domain(d3v4.extent(map_data,
             function(d) { return d.median_earnings; }))
         .range(colors.median_earnings);
 
     // Create dataset to store each state's value and color
     var dataset = {};
-    state_data.forEach(function(d){
+    map_data.forEach(function(d){
         dataset[d.state_id] = {
             numberofThings: d.funding_per_student,
             fillColor:  paletteScaleFunding(d.funding_per_student)
@@ -36,7 +35,7 @@ var buildMap = function (selected_attr, state_data) {
     });
 
     var datasetFunding = {};
-    state_data.forEach(function(d){
+    map_data.forEach(function(d){
         datasetFunding[d.state_id] = {
             numberofThings: d.funding_per_student,
             fillColor:  paletteScaleFunding(d.funding_per_student)
@@ -44,7 +43,7 @@ var buildMap = function (selected_attr, state_data) {
     });
 
     var datasetDebt = {};
-    state_data.forEach(function(d){
+    map_data.forEach(function(d){
         datasetDebt[d.state_id] = {
             numberofThings: d.mean_debt,
             fillColor:  paletteScaleDebt(d.mean_debt)
@@ -52,7 +51,7 @@ var buildMap = function (selected_attr, state_data) {
     });
 
     var datasetEarnings = {};
-    state_data.forEach(function(d){
+    map_data.forEach(function(d){
         datasetEarnings[d.state_id] = {
             numberofThings: d.median_earnings,
             fillColor:  paletteScaleEarnings(d.median_earnings)
@@ -86,20 +85,20 @@ var buildMap = function (selected_attr, state_data) {
               var enterState = '<div class="sf sf-' + stateClass.toLowerCase() + '"></div> <h2>' + geography.properties.name + '</h2>';
               $('#scattercanvas').html('').fadeIn('fast');
               $('#stateinfo').html(enterState);
-              createVis("scatter", stateClass);
+              buildScatterplot(stateClass);
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
               $('.school-list').hide();
               $('#vis_container').html('');
               $('#schoolAndStateInfo').html('');
-              createVis("line", stateClass);
+              buildLineChart(stateClass);
             }).on('mouseover', function(){
               $this = this;
               $(this).removeClass('datamaps-subunit');
               var stateClass = $(this).attr('class');
               $('#vis_container').html('');
               $('#schoolAndStateInfo').html('');
-              createVis("line", stateClass);
+              buildLineChart(stateClass);
             });
           }
           }
@@ -119,7 +118,7 @@ var buildMap = function (selected_attr, state_data) {
           map.updateChoropleth(datasetFunding);
         });
 
-};
+}
 
 
 $(".attr").on('click', function(){

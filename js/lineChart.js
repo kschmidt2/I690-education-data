@@ -1,5 +1,6 @@
-/*This function creates the line chart that helps us to compare the amount of state funding per student in the selected state*/
-function buildLineChart(selectState, state_data) {
+// Build line chart of state funding over time for a given state
+// Uses global state_data array
+function buildLineChart(selectState) {
 
     //Defines the size of the various attributes in the visualization canvas
     var height = 500;
@@ -68,7 +69,7 @@ function buildLineChart(selectState, state_data) {
     var lineFunc = d3v4.line()
         .x(function (d) { return x(d.year); })
         .y(function (d) { populateDetails(d); return y(d.state_funding / d.ft_students); });
-        
+
     svg.append("svg:path")
             .attr("d", lineFunc(state_data[selectState]))
             .attr("stroke", "red")

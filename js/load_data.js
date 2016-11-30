@@ -23,21 +23,15 @@ var get_year_data = function(target_year, state_data) {
     return annual_data;
 };
 
-// Define variables to control which vis function we call
-var vis_function_list = {
-    "map": buildMap,
-    "scatter": buildScatter,
-    "line": buildLineChart,
-    "bars": buildBarCharts
-};
+// Declare data variables
+var state_data = [],
+    school_data = [],
+    national_avgs = [];
 
-function combine_data(mode, vis_function_args) {
+// Combine data and draw initial map
+function combine_data(vis_function_args) {
 
     return function(error, raw_school_data, raw_state_data) {
-        var school_data = [],
-            state_data = [];
-
-        this.test = raw_school_data;
 
         // Select the fields we want from school data
         raw_school_data.forEach(function(d) {
@@ -60,6 +54,7 @@ function combine_data(mode, vis_function_args) {
         school_data = school_data.filter(function(d) {
             return d.state in state_abbr;
         });
+
         // Filter out school records with non-number values in numerical fields
         school_data = school_data.filter(function(d) {
             var number_fields =
@@ -76,16 +71,9 @@ function combine_data(mode, vis_function_args) {
             return true;
         });
 
-        // Scatterplot only needs school data, so draw it now
-        if (mode == "scatter") {
-            vis_function_args.push(school_data);
-            return this.vis_function_list[mode]
-                .apply(this, vis_function_args);
-        }
-
         // Select the fields we want from state data
         raw_state_data.forEach(function(d) {
-            state_data.push({
+            this.state_data.push({
                 state: d.State,
                 year: d.FiscalYear,
                 inflation: 1/(+d.InflationDenom),
@@ -147,36 +135,18 @@ function combine_data(mode, vis_function_args) {
         }
 
         // Simplify nested data structure
-        var annual_state_data = {};
         for (var j=0; j < nested_state_data.length; j++) {
             var state = nested_state_data[j];
-            annual_state_data[state.key] = [];
+            state_data[state.key] = [];
             for (var k=0; k < state.values.length; k++) {
                 var year = state.values[k];
-                annual_state_data[state.key].push(year.values[0]);
+                state_data[state.key].push(year.values[0]);
             }
         }
 
-        // Line chart needs annual data, so draw it now
-        if (mode == "line") {
-            vis_function_args.push(annual_state_data);
-            return this.vis_function_list[mode]
-                .apply(this, vis_function_args);
-        }
-
-
-        // Map needs most recent year's data, so draw it now
-        else if (mode == "map") {
-            vis_function_args.push(
-                get_year_data("2015", annual_state_data)
-            );
-            return this.vis_function_list[mode]
-                .apply(this, vis_function_args);
-        }
-
-        // Else we're drawing bar charts, so we need the national averages
-        var state_last_year = get_year_data("2015", annual_state_data);
-        var national_data = {
+        // Calculate national average statistics
+        var state_last_year = get_year_data("2015", this.state_data);
+        this.national_avgs = {
             median_earnings: d3v4.median(state_last_year,
                 function(d) { return d.median_earnings; }),
             mean_debt: d3v4.mean(state_last_year,
@@ -188,27 +158,20 @@ function combine_data(mode, vis_function_args) {
             completion_rate: d3v4.mean(state_last_year,
                 function(d) { return d.completion_rate; })
         };
-        vis_function_args.push(state_last_year, national_data);
-        this.vis_function_list[mode].apply(this, vis_function_args);
+
+        buildMap(vis_function_args);
     };
 }
 
-function createVis (mode) {
-    if (!(mode in vis_function_list)) {
-        throw new Error("We don't know how to visualize a "+ mode +". Try a different vis mode?");
-    } else {
-        console.log("Drawing in "+ mode +" mode");
-    }
-
-    var vis_function_args = Array.prototype.slice.call(arguments, 1);
-
-    // load data
+function createMap(mode) {
     var institutionFile = "data/institutional-data.csv";
     var stateFile = "data/state-data.csv";
+
+    var args = Array.prototype.slice.call(arguments);
 
     var q = d3v4.queue()
         .defer(d3v4.csv, institutionFile)
         .defer(d3v4.csv, stateFile)
-        .await(combine_data(mode, vis_function_args));
+        .await(combine_data(args));
 
 }

@@ -1,6 +1,6 @@
 // Build scatterplot for a state based on school data
-// Call with createVis("scatter", selectedState);
-var buildScatter = function(selectState, school_data) {
+// Uses global school_data array
+var buildScatterplot = function(selectState) {
 
     // margins
     var margin = {top: 25, right: 0, bottom: 55, left: 80},
@@ -41,12 +41,8 @@ var buildScatter = function(selectState, school_data) {
         function(d) { return d.mean_debt_graduated; })).nice();
 
     // Filter to show selected state
-    this.filtered_data = school_data.filter(function(d,i,arr) {
-        if (selectState == d.state) {
-            return d.state;
-        } else {
-            return false;
-        }
+    this.filtered_data = school_data.filter(function(d) {
+        return selectState === d.state;
     });
 
     // build scatterplot
@@ -117,19 +113,16 @@ var buildScatter = function(selectState, school_data) {
 };
 
 // Build bar charts comparing school, state, and national averages
-// To add more function parameters (e.g., selected state/school),
-// add them to the beginning of the list.
-// Call with createVis("bars", <selection variables>);
-function buildBarCharts (d, state_data, national_data) {
+// Uses global state_data and national_avgs arrays
+function buildBarCharts (d) {
     console.log(d.median_earnings);
     console.log(state_data);
-    console.log(national_data);
+    console.log(national_avgs);
 }
 
 
 /* Helper functions */
 function scatterHover(d) {
-    console.log(d);
     details(d);
     $('.dot').css('fill', '#47b4f2').attr("r", 10);
     $(this).css('fill', "#1f3f48").attr("r", 15);
