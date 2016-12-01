@@ -188,6 +188,10 @@ select {
   border-radius: 0;
 }
 
+.bar-containers {
+  padding-left: 0;
+}
+
 .national {
   fill: #ffa500;
 }
@@ -196,6 +200,24 @@ select {
 }
 .school {
   fill: #47b4f2;
+}
+
+.key {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.national-key {
+  color: #ffa500;
+  font-weight: 700;
+}
+.state-key {
+  color: #AFC436;
+  font-weight: 700;
+}
+.school-key {
+  color: #47b4f2;
+  font-weight: 700;
 }
 
 .selectpicker {

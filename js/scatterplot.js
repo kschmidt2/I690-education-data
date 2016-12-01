@@ -87,8 +87,14 @@ var buildScatterplot = function(selectState) {
         .attr("cy", function(d) { return y(d.mean_debt_graduated); })
         .attr("stroke", "#fff")
         .attr("fill", "#d2d9da")
-        .on("click", buildBarCharts)
-        .on("mouseover", buildBarCharts);
+        .on("click", function(d) {
+          buildBarCharts(d);
+          details(d);
+        })
+        .on("mouseover", function(d) {
+          buildBarCharts(d);
+          details(d);
+        });
 
     // creates dropdown menu for each state
     var dropDown = d3.select("#school-selector").append("select")
@@ -113,6 +119,25 @@ var buildScatterplot = function(selectState) {
     // Build bar charts comparing school, state, and national averages
     // Uses global state_data and national_avgs arrays
     function buildBarCharts(selectedSchool) {
+
+        $('#schoolinfo').html('');
+
+        // changes dot size and color on focus
+        d3.selectAll('.dot')
+            .attr('r', function(d, i) {
+                if (d.college == selectedSchool.college) {
+                    return 15;
+                } else {
+                    return 10;
+                }
+            })
+            .style('fill', function(d, i) {
+                if (d.college == selectedSchool.college) {
+                    return "#47b4f2";
+                } else {
+                    return "#d2d9da";
+                }
+            });
 
         var bar_groups = [
           {"name": "Median earnings", "values": [
@@ -152,7 +177,7 @@ var buildScatterplot = function(selectState) {
           .data(bar_groups)
           .enter()
             .append("div")
-              .classed("col-xs-6", true)
+              .classed("col-xs-6 col-sm-4 bar-containers", true)
             .append("div")
               .classed("svg-container-bars", true) //container class to make it responsive
             .append("svg:svg")
@@ -178,17 +203,15 @@ var buildScatterplot = function(selectState) {
                             .padding(0.3)
                             .domain(["national", "state", "school"]);
 
-                            svg.append("g")
-                            .append("text")
-                            .attr("x", 0)
-                            .attr("y", 0)
-                            .attr("dy", ".71em")
-                            .attr("text-anchor", "start")
-                            .attr("font-size", "6rem")
-                            .style("text-transform", "uppercase")
-                            .text(function(d) { return d.name});
-
-
+                svg.append("g")
+                  .append("text")
+                  .attr("x", 0)
+                  .attr("y", 0)
+                  .attr("dy", ".71em")
+                  .attr("text-anchor", "start")
+                  .attr("font-size", "6rem")
+                  .style("text-transform", "uppercase")
+                  .text(function(d) { return d.name});
 
                 var g2 = svg.selectAll("#bar")
                   .data(allValues)
@@ -204,7 +227,7 @@ var buildScatterplot = function(selectState) {
                     .attr("id", "bar");
 
                 g2.append("text")
-                  .text(function(d) { return d.amount.toFixed(2); })
+                  .text(function(d) { return d.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'); })
                   .attr("y", function(d){ return barY(d.category) + margin.top + barY.bandwidth()/1.4; })
                   .attr("x", function(d){ return (barX(d.amount)) - 20; })
                   .attr("text-anchor", "middle")
@@ -213,6 +236,12 @@ var buildScatterplot = function(selectState) {
                   .style("font-size", "4rem");
         })
     } //closes bar chart
+
+    function details (d) {
+      var details = "<h3>" + d.college + "</h3>";
+      details += "<span class='key'><span class='school-key'>School</span> | <span class='state-key'>State average</span> | <span class='national-key'>National average</span></span>";
+      $('#schoolname').html(details);
+    }
 
     // highlights circle and creates info box on dropdown selection
     function dropClick(d) {
@@ -231,26 +260,10 @@ var buildScatterplot = function(selectState) {
                 // pass data element to scatterHover function so the dropdown
                 // responds the same way clicking on a circle does
                 buildBarCharts(d);
+                details(d);
             }
         });
 
-        // increases dot size and changes color on dropdown click
-        d3.selectAll('.dot')
-            .attr('r', function(d, i) {
-                if (d.college == selectedValue) {
-                    return 15;
-                } else {
-                    return 10;
-                }
-            })
-            .style('fill', function(d, i) {
-                if (d.college == selectedValue) {
-                    return "#47b4f2";
-                } else {
-                    return "#d2d9da";
-                }
-            }
-        );
     }
 
 
