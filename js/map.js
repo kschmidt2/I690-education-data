@@ -90,6 +90,7 @@ function buildMap(selected_attr) {
               $('.school-list').hide();
               $('.school-list'+stateClass).show();
               buildScatterplot(stateClass);
+              $('#schoolname').html('');
               $('#schoolinfo').html('');
               $('.selectpicker').fadeIn('fast');
               $('.school-list').hide();
