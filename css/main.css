@@ -188,6 +188,16 @@ select {
   border-radius: 0;
 }
 
+.national {
+  fill: #ffa500;
+}
+.state {
+  fill: #AFC436;
+}
+.school {
+  fill: #47b4f2;
+}
+
 .selectpicker {
   display: none;
 }
@@ -234,7 +244,7 @@ select {
   display: inline-block;
   position: relative;
   width: 100%;
-  padding-bottom: 45%; /* aspect ratio */
+  padding-bottom: 55%; /* aspect ratio */
   vertical-align: top;
   overflow: hidden;
   float: left;
