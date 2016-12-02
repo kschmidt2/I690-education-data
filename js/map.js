@@ -108,6 +108,8 @@ function buildMap(selected_attr) {
               infoBox(stateClass);
             }).on('mouseleave', function(){
               $('.datamaps-subunits').children().css('opacity', '1.0');
+              // $('#vis_container').html('');
+              // $('#state-info').html('');
             });
           }
           }

@@ -99,20 +99,20 @@ var buildScatterplot = function(selectState) {
     // creates dropdown menu for each state
     var dropDown = d3.select("#school-selector").append("select")
         .data(filtered_data)
-        .attr("class", function(d) { return "school-list school-list"+ d.state; });
+        .attr("class", function(d) { return "school-list school-list"+ d.state;});
+
+    var selectSchool = dropDown.append("option")
+        .text("Select a school:");
 
     var options = dropDown.selectAll("option").data(filtered_data)
         .enter().append("option")
         .text(function (d) { return d.college; })
-        .attr("value", function (d) { return d.college; });
+        .attr("value", function (d) { return d.college; })
+        ;
 
     // calls function that selects dot on menu selection
     dropDown.on("change", dropClick);
 
-    // adds select a school option to the menus
-    $('option:first-child').before('<option>Select a school:</option>');
-    $('option:first-child').val("show-all");
-    $('.school-list').val("show-all");
 
     updateRegression(filtered_data);
 
