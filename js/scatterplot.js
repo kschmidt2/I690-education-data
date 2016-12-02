@@ -44,6 +44,8 @@ var buildScatterplot = function(selectState) {
         return selectState === d.state;
     });
 
+    updateRegression(filtered_data);
+
     // build scatterplot
     svg.append("g")
         .attr("class", "axis")
@@ -113,8 +115,6 @@ var buildScatterplot = function(selectState) {
     // calls function that selects dot on menu selection
     dropDown.on("change", dropClick);
 
-
-    updateRegression(filtered_data);
 
     // Build bar charts comparing school, state, and national averages
     // Uses global state_data and national_avgs arrays
