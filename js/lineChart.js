@@ -69,6 +69,15 @@ function buildLineChart(selectState) {
         .style("text-anchor", "end")
         .text("Funding per student");
 
+    svg.append("text")
+        .attr("transform", "rotate(90)")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 20)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("(2015 dollars)");
+
 
     //Draws the line chart
     var lineFunc = d3v4.line()
