@@ -283,4 +283,8 @@ select {
     width: 90%;
     margin-bottom: 10px;
   }
+  footer {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 }
