@@ -80,7 +80,7 @@ button#median_earnings {
 button.active {
   background-color: #ECEDEB !important;
   color: #1f3f48;
-  border: 1px solid #1f3f48;
+  box-shadow: inset 0px 1px 5px rgba(0,0,0,.3);
 }
 
 button:focus {
