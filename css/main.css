@@ -25,6 +25,7 @@ body {
 .intro h1 {
   font-size: 4rem;
   font-weight: 900;
+  margin-bottom: 2rem;
 }
 
 .intro p {
@@ -273,3 +274,13 @@ select {
 }
 
 /*media queries*/
+@media (max-width: 480px) {
+  .intro {
+    padding-right: 10%;
+    padding-left: 10%;
+  }
+  .buttons button {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+}
