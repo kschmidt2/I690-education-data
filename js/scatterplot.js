@@ -106,7 +106,8 @@ var buildScatterplot = function(selectState) {
     var selectSchool = dropDown.append("option")
         .text("Select a school:");
 
-    var options = dropDown.selectAll("option").data(filtered_data)
+    var options = dropDown.selectAll(".school-option").data(filtered_data)
+        .attr("class", "school-option")
         .enter().append("option")
         .text(function (d) { return d.college; })
         .attr("value", function (d) { return d.college; })
