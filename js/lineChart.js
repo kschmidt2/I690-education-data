@@ -24,7 +24,7 @@ function buildLineChart(selectState) {
       //class to make it responsive
       .classed("svg-content-responsive", true)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Define the axis scales and formats
     var x = d3v4.scaleLinear()
@@ -73,7 +73,7 @@ function buildLineChart(selectState) {
     //Draws the line chart
     var lineFunc = d3v4.line()
         .x(function (d) { return x(d.year); })
-        .y(function (d) { return y(d.state_funding / d.ft_students); });
+        .y(function (d) { return y((d.state_funding / d.ft_students)*d.inflation); });
 
     svg.append("svg:path")
             .attr("d", lineFunc(state_data[selectState]))
