@@ -44,8 +44,8 @@ function combine_data(vis_function_args) {
                 mean_price: +d.avg_net_price,
                 median_earnings: +d.median_earnings,
                 completion_rate: +d.completion_rate,
-                mean_debt_withdrawn: +d.debt_withdrew,
-                mean_debt_graduated: +d.debt_graduated,
+                median_debt_withdrawn: +d.debt_withdrew,
+                median_debt_graduated: +d.debt_graduated,
                 repayment_rate: +d.repayment_rate
             });
         });
@@ -59,8 +59,8 @@ function combine_data(vis_function_args) {
         school_data = school_data.filter(function(d) {
             var number_fields =
                 ["median_income", "mean_price", "median_earnings",
-                "completion_rate", "mean_debt_graduated",
-                "mean_debt_withdrawn", "repayment_rate"];
+                "completion_rate", "median_debt_graduated",
+                "median_debt_withdrawn", "repayment_rate"];
 
             for (var i=0; i < number_fields.length; i++) {
                 var property_value = d[number_fields[i]];
@@ -114,8 +114,8 @@ function combine_data(vis_function_args) {
                 return {
                     median_earnings: d3v4.median(states,
                         function(d) { return d.median_earnings; }),
-                    mean_debt: d3v4.mean(states,
-                        function(d) { return d.mean_debt_graduated; }),
+                    median_debt: d3v4.median(states,
+                        function(d) { return d.median_debt_graduated; }),
                     mean_price: d3v4.mean(states,
                         function(d) { return d.mean_price; }),
                     repayment_rate: d3v4.mean(states,
@@ -149,8 +149,8 @@ function combine_data(vis_function_args) {
         this.national_avgs = {
             median_earnings: d3v4.median(state_last_year,
                 function(d) { return d.median_earnings; }),
-            mean_debt: d3v4.mean(state_last_year,
-                function(d) { return d.mean_debt; }),
+            median_debt: d3v4.median(state_last_year,
+                function(d) { return d.median_debt; }),
             mean_price: d3v4.mean(state_last_year,
                 function(d) { return d.mean_price; }),
             repayment_rate: d3v4.mean(state_last_year,

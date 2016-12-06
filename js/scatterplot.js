@@ -37,7 +37,7 @@ var buildScatterplot = function(selectState) {
     x.domain(d3v4.extent(school_data,
         function(d) { return d.median_earnings; })).nice();
     y.domain(d3v4.extent(school_data,
-        function(d) { return d.mean_debt_graduated; })).nice();
+        function(d) { return d.median_debt_graduated; })).nice();
 
     // Filter to show selected state
     filtered_data = school_data.filter(function(d) {
@@ -77,7 +77,7 @@ var buildScatterplot = function(selectState) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Average debt");
+        .text("Median debt");
 
     // draws circles on Scatterplot
     svg.selectAll(".dot").data(filtered_data)
@@ -86,7 +86,7 @@ var buildScatterplot = function(selectState) {
         .attr("class", "dot")
         .attr("r", 10)
         .attr("cx", function(d) { return x(d.median_earnings); })
-        .attr("cy", function(d) { return y(d.mean_debt_graduated); })
+        .attr("cy", function(d) { return y(d.median_debt_graduated); })
         .attr("stroke", "#fff")
         .attr("fill", "#d2d9da")
         .on("click", function(d) {
@@ -146,22 +146,22 @@ var buildScatterplot = function(selectState) {
               {"category": "state", "amount": d3.mean(filtered_data,function(d) { return d.median_earnings; })},
               {"category": "national", "amount": national_avgs.median_earnings}
           ]},
-          {"name": "Average debt", "values": [
-                {"category": "school", "amount": selectedSchool.mean_debt_graduated},
-                {"category": "state", "amount": d3.mean(filtered_data,function(d) { return d.mean_debt_graduated; })},
-                {"category": "national", "amount": national_avgs.mean_debt}
+          {"name": "Median debt", "values": [
+                {"category": "school", "amount": selectedSchool.median_debt_graduated},
+                {"category": "state", "amount": d3.mean(filtered_data,function(d) { return d.median_debt_graduated; })},
+                {"category": "national", "amount": national_avgs.median_debt}
           ]},
-          {"name": "Net price", "values": [
+          {"name": "Net out-of-pocket cost", "values": [
                 {"category": "school", "amount": selectedSchool.mean_price},
                 {"category": "state", "amount": d3.mean(filtered_data,function(d) { return d.mean_price; })},
                 {"category": "national", "amount": national_avgs.mean_price}
           ]},
-          {"name": "Graduation rate", "values": [
+          {"name": "Six-year graduation rate", "values": [
                 {"category": "school", "amount": selectedSchool.completion_rate},
                 {"category": "state", "amount": d3.mean(filtered_data,function(d) { return d.completion_rate; })},
                 {"category": "national", "amount": national_avgs.completion_rate}
           ]},
-          {"name": "Repayment rate", "values": [
+          {"name": "Loan repayment rate", "values": [
                 {"category": "school", "amount": selectedSchool.repayment_rate},
                 {"category": "state", "amount": d3.mean(filtered_data,function(d) { return d.repayment_rate; })},
                 {"category": "national", "amount": national_avgs.repayment_rate}
@@ -187,13 +187,13 @@ var buildScatterplot = function(selectState) {
               .attr("viewBox", "0 0 800 400")
               //class to make it responsive
               .classed("svg-content-responsive", true)
-              .attr("id", function(d) { return d.name })
+              .attr("id", function(d) { return d.name; })
             .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
            .each(function(d, i){ // creates every bar chart separately
                 var svg = d3.select(this);
                 var allValues = d.values;
-                var xMax = d3v4.max(allValues, function(d) { return d.amount; })
+                var xMax = d3v4.max(allValues, function(d) { return d.amount; });
 
                 // define scales
                 var barX = d3v4.scaleLinear()
@@ -212,7 +212,7 @@ var buildScatterplot = function(selectState) {
                   .attr("text-anchor", "start")
                   .attr("font-size", "6rem")
                   .style("text-transform", "uppercase")
-                  .text(function(d) { return d.name});
+                  .text(function(d) { return d.name; });
 
                 var g2 = svg.selectAll("#bar")
                   .data(allValues)
@@ -221,10 +221,10 @@ var buildScatterplot = function(selectState) {
 
                 g2.append("rect")
                     .attr("x", margin.left )
-                    .attr("height", function(d) { return barY.bandwidth() })
+                    .attr("height", function(d) { return barY.bandwidth(); })
                     .attr("y", function(d){ return barY(d.category) + margin.top; })
                     .attr("width", function(d) { return barX(d.amount); })
-                    .attr("class", function(d) { return d.category })
+                    .attr("class", function(d) { return d.category; })
                     .attr("id", "bar");
 
                 g2.append("text")
@@ -235,7 +235,7 @@ var buildScatterplot = function(selectState) {
                   .attr("fill", "#fff")
                   .style("text-anchor", "end")
                   .style("font-size", "4rem");
-        })
+        });
     } //closes bar chart
 
     function details (d) {
@@ -274,7 +274,7 @@ var buildScatterplot = function(selectState) {
 // Add a regression line
 function updateRegression(schools) {
     var linear_model = ss.linearRegression(schools.map(function(d) {
-        return [d.median_earnings, d.mean_debt_graduated];
+        return [d.median_earnings, d.median_debt_graduated];
     }));
 
     var regression_function = ss.linearRegressionLine(linear_model);

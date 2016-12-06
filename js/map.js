@@ -8,7 +8,7 @@ function buildMap(selected_attr) {
     }
 
     // Define color scale
-    var colors = {median_earnings: ["#faeed9","#ffa500"], funding_per_student: ["#daf0fc", "#47b4f2"], mean_debt: ["#eff3d3", "#AFC436"] };
+    var colors = {median_earnings: ["#faeed9","#ffa500"], funding_per_student: ["#daf0fc", "#47b4f2"], median_debt: ["#eff3d3", "#AFC436"] };
 
     var paletteScaleFunding = d3.scale.linear()
         .domain(d3v4.extent(map_data,
@@ -17,8 +17,8 @@ function buildMap(selected_attr) {
 
     var paletteScaleDebt = d3.scale.linear()
         .domain(d3v4.extent(map_data,
-            function(d) { return d.mean_debt; }))
-        .range(colors.mean_debt);
+            function(d) { return d.median_debt; }))
+        .range(colors.median_debt);
 
     var paletteScaleEarnings = d3.scale.linear()
         .domain(d3v4.extent(map_data,
@@ -45,8 +45,8 @@ function buildMap(selected_attr) {
     var datasetDebt = {};
     map_data.forEach(function(d){
         datasetDebt[d.state_id] = {
-            numberofThings: d.mean_debt,
-            fillColor:  paletteScaleDebt(d.mean_debt)
+            numberofThings: d.median_debt,
+            fillColor:  paletteScaleDebt(d.median_debt)
         };
     });
 
@@ -63,11 +63,11 @@ function buildMap(selected_attr) {
         if (d.state_id == selectState) {
           var stateDetails = "<h3>" + d.state + "</h3>";
           stateDetails += "<span class='category funding'>State funding per student (2015):</span> $" + d.funding_per_student.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-          stateDetails += "</br><span class='category debt'>Average debt per student (2014)</span>: $" + d.mean_debt.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+          stateDetails += "</br><span class='category debt'>Median debt per student (2014)</span>: $" + d.median_debt.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
           stateDetails += "</br><span class='category earnings'>Median earnings per student (2012)</span>: $" + d.median_earnings.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
           $("#state-info").html(stateDetails);
         }
-      })
+    });
     }
 
 
@@ -119,7 +119,7 @@ function buildMap(selected_attr) {
            map.resize();
         });
 
-        $("#mean_debt").on('click', function(){
+        $("#median_debt").on('click', function(){
           map.updateChoropleth(datasetDebt);
         });
         $("#median_earnings").on('click', function(){

@@ -43,7 +43,7 @@
         <div class="col-xs-12 col-sm-8 map-div">
           <div class="buttons" id="but">
               <button class="attr active" id="state_funding" >State Funding</button>
-              <button class="attr" id = "mean_debt" >Average Debt</button>
+              <button class="attr" id="median_debt" >Median Debt</button>
               <button class="attr" id="median_earnings" >Median Earnings</button>
           </div>
           <div class="map">
@@ -54,7 +54,16 @@
           <div class="row hover-info">
             <div class="col-xs-12 col-sm-10 about-data">
               <h4>About the data</h4>
-              <p>Funding data from the <a href="http://www.sheeo.org/projects/shef-fy15">State Higher Education Executive Officers Association</a>. All other data from the <a href="https://collegescorecard.ed.gov/data/">U.S. Department of Education College Scorecard</a>.</p>
+              <p><em>Source</em>: Funding data comes from the <a href="http://www.sheeo.org/projects/shef-fy15">State Higher Education Executive Officers Association</a>; all other data from the <a href="https://collegescorecard.ed.gov/data/">U.S. Department of Education College Scorecard</a>.</p>
+              <p><em>Data Descriptions</em>:
+                  <strong>State Funding</strong> is the state's higher education budget divided by the number of enrolled students; historical funding data is adjusted for inflation.
+                  <strong>Median Debt</strong> for each school is the total median debt for students who graduate;
+                  <strong>median Earnings</strong> for each school gives the median of graduates' salaries ten years after graduation;
+                  and the state values give the median of the individal schools' debt and earnings.
+                  <strong>Net Cost</strong> is the average price students pay to attend after federal, state, and school aid packages, including tuition and fees, textbooks, and living expenses.
+                  <strong>Graduation Rate</strong> gives the percentage of first-time, full-time first year students who complete a bachelor's degree within six years.
+                  <strong>Repayment Rate</strong> is the percent of students who are actively paying down their student loans three years after graduation.
+              </p>
             </div>
             <div id="vis_container"></div>
             <div id ="state-info"></div>
