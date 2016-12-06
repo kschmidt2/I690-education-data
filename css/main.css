@@ -92,10 +92,19 @@ button:focus {
 }
 
 .about-data {
-  padding: 1rem 2rem;
+  /*padding: 1rem 2rem;
   border-top: 2px solid #ECEDEB;
   border-bottom: 2px solid #ECEDEB;
-  margin-bottom: 2rem;
+  margin-bottom: 2rem;*/
+}
+
+h4 {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+#vis_container {
+  margin-top: 6rem;
 }
 
 #vis_container .domain {
@@ -286,5 +295,8 @@ select {
   footer {
     padding-left: 10%;
     padding-right: 10%;
+  }
+  #vis_container {
+    margin-top: 0rem;
   }
 }
